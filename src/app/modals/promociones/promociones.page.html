@@ -1,0 +1,197 @@
+<ion-header>
+  <ion-toolbar style="--background: #55acee;">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: white;" slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color:white; margin-left: -15px; ">Promociones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+
+    <ion-list lines="full">
+      <ion-item-divider>
+        Promociones de AppFast!:
+      </ion-item-divider>
+      <div *ngIf="existePromocion">
+        <br>
+        <ion-label style="margin-left: 10px !important;">No hay promociones disponibles... :( </ion-label>
+
+      </div>
+      <ion-list *ngIf="estadoCarga==false">
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="end">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <p>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngFor="let producto of promociones; let i = index">
+
+
+        <ion-col size="8">
+          <ion-label class="ion-text-left" style="font-weight: bold; font-style: italic; margin-bottom: 5px;">Válido del
+            {{producto.fecha_inicio.substring(5,10).replace("-","/")}} al
+            {{producto.fecha_fin.substring(5,10).replace("-","/")}}</ion-label>
+          <ion-label style="font-weight: bold; text-transform: capitalize;  color:#01BA76;">
+            {{producto.empresa_razon_social}}
+          </ion-label>
+          <ion-label style="font-weight: bold; margin-bottom: 5px; text-transform: capitalize;">{{producto.nombre}}
+          </ion-label>
+          <ion-label class="ion-text-left">{{producto.descripcion}}</ion-label>
+          <ion-label style="font-weight: 550;">Precio unitario: <span
+              style="color:#36CD7A;">{{producto.precio_unitario | currency:'PEN':'S/. ':'1.2-2'}}</span></ion-label>
+
+
+
+
+
+          <ion-buttons>
+            <div *ngIf="verificarHora(producto.horario_inicio,producto.horario_fin); else templateName">
+
+              <div *ngIf="verificarExistencia(producto.id) else templateName1">
+                <ion-label style="font-weight: bold; color:red; font-style: italic;">
+                  ¡Ya está en el carrito!! </ion-label>
+              </div>
+              <ng-template #templateName1>
+                <ion-button fill="outline" style="height: 22px !important;" (click)="onAgregarCarrito(producto)"
+                  [disabled]="verificarExistencia(producto.id) || !verificarHora(producto.horario_inicio,producto.horario_fin)"
+                  size="small" color="primary"><span style="margin-right: 3px;">
+                    <ion-icon name="cart"></ion-icon>
+                  </span> Agregar al carrito
+                </ion-button>
+              </ng-template>
+            </div>
+            <ng-template #templateName>
+              <br>
+              <ion-badge color="medium">CERRADO</ion-badge>
+            </ng-template>
+
+          </ion-buttons>
+        </ion-col>
+        <ion-col size="4" class="ion-text-center ion-activatable ripple-parent">
+          <ion-icon *ngFor="let number of [0,1,2,3,4]" color="{{number<producto.ranking?'warning':'medium'}}"
+            name="star-sharp"></ion-icon>
+          <ion-img (click)="verPromo(i)" src="{{producto.url_imagen}}"></ion-img>
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-col>
+
+
+      </ion-item>
+
+    </ion-list>
+
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar style="--background: #55acee;">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: white;" slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="color:white; margin-left: -15px; ">Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondoColor">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list class="fondoColor">
+          <ion-item-divider class="fondoColor" style="margin-top: -15px; margin-bottom: -5px;">
+            <ion-label style="font-size: bold;">Mis favoritos:</ion-label>
+          </ion-item-divider>
+          <div *ngIf="existeFavoritos">
+            <br>
+            <ion-label style="font-weight: bold; margin-left: 10px !important;">No tiene favoritos :( , agrege
+              algunos!!!
+            </ion-label>
+          </div>
+        </ion-list>
+        <ion-card *ngFor="let favorito  of favoritos">
+          <ion-card-content style="margin-top: -15px; margin-bottom: -10px;">
+            <ion-row>
+              <ion-col class="contenedorImagen" size="4">
+                <ion-img src="{{favorito.url_imagen}}"></ion-img>
+              </ion-col>
+              <ion-col size="7">
+                <ion-label style="color: #01BA76; font-weight: bold; margin-bottom: 4px;">
+                  {{favorito.empresa_razon_social}}</ion-label>
+                <br>
+                <ion-label style="font-weight: bold; margin-bottom: 4px;">{{favorito.nombre}}</ion-label>
+                <br>
+                <ion-label>Precio unidad: <span
+                    style="color: #01BA76;">{{favorito.precio_unitario | currency:'PEN':'S/. ':'1.2-2'}}</span>
+                </ion-label>
+                <br>
+                <ion-icon *ngFor="let number of [0,1,2,3,4]" color="{{number<favorito.ranking?'warning':'medium'}}"
+                  name="star-sharp"></ion-icon>
+                <br>
+                <ion-buttons style="margin-top: 0px;">
+                  <div *ngIf="verificarHora(favorito.horario_inicio,favorito.horario_fin); else templateName">
+                    <div *ngIf="verificarExistencia(favorito.id); else templateName1">
+                      <ion-label style="font-weight: bold; color:red; font-style: italic;">
+                        ¡Ya está en el carrito!
+                      </ion-label>
+                    </div>
+                    <ng-template #templateName1>
+                      <ion-button fill="outline" style="height: 22px !important; margin-top: -5px;"
+                      (click)="onAgregarCarrito(favorito)" size="small" color="primary"><span>
+                        <ion-icon style="margin-right: 3px;" name="cart"></ion-icon>
+                      </span>Agregar al carrito
+                      </ion-button> 
+                    </ng-template>
+
+                  </div>
+                  <ng-template #templateName>
+                    <br>
+                    <ion-badge color="medium">CERRADO</ion-badge>
+                  </ng-template>
+
+                </ion-buttons>
+
+
+              </ion-col>
+              <ion-col size="1" class="contenedorEliminar">
+                <ion-buttons>
+                  <ion-button (click)="quitarFavorito(favorito.id,favorito.nombre)">
+                    <ion-icon style="font-weight: bold;"
+                      color="{{herramientasService.existeFavorito(favorito.id)?'danger':'medium'}}" slot="icon-only"
+                      name="trash-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

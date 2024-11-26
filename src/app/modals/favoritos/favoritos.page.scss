@@ -1,0 +1,22 @@
+ion-img {
+    border: 0.5px solid gray;
+    border-radius: 10% !important;
+    overflow: hidden;
+}
+
+.contenedorImagen {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedorEliminar {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.fondoColor {
+    --background: #EBF2FC;
+    background: #EBF2FC;
+}

@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #FBFBFB;">
+    <ion-buttons slot="start">
+      <ion-button  (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">Háblanos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="help-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #FBFBFB;">
+  
+<ion-grid fixed>
+  <ion-row>
+    
+    <ion-title style="font-weight: bold; margin-top: 10px;"> <ion-icon style="color:#36CD7A; font-weight: bold;" name="chatbubbles-outline"></ion-icon> Contáctate con nosotros:</ion-title>
+    <ion-col size="12">
+      <ion-list lines="none" style="margin-top: -8px;" style="--background: #FBFBFB;">
+        <ion-radio-group  (ionChange)="radioGroupChange($event)"  value="1">
+          <ion-list-header  style="--background: #FBFBFB;">
+            <ion-label>Seleccione una opción:</ion-label>
+          </ion-list-header>
+      
+          <ion-item  style="--background: #FBFBFB;">
+            <ion-label>Anunciar mi empresa en Pedi2.pe!</ion-label>
+            <ion-radio color="success" slot="start" value="1"></ion-radio>
+          </ion-item>
+      
+          <ion-item  style="--background: #FBFBFB;">
+            <ion-label>Quiero vender mis productos.</ion-label>
+            <ion-radio color="success" slot="start" value="2"></ion-radio>
+          </ion-item>
+
+          <ion-item  style="--background: #FBFBFB;">
+            <ion-label>Quiero ser motorizado.</ion-label>
+            <ion-radio color="success" slot="start" value="3"></ion-radio>
+          </ion-item>
+      
+          <ion-item  style="--background: #FBFBFB;">
+            <ion-label>Otro.</ion-label>
+            <ion-radio color="success" slot="start" value="4"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <ion-list-header  style="--background: #FBFBFB;">
+          <ion-label>Correo: <span style="color: red;">(opcional)</span></ion-label>
+        </ion-list-header>
+
+        <ion-item style="margin-top: -15px; --background: #FBFBFB;" >
+          <ion-input  [(ngModel)]="correo" style="background: #F2F2F2; border-radius: 10px !important;  padding-left: 10px !important; padding-right: 10px !important;" type="email" placeholder=" Ingrese texto..."></ion-input>
+        </ion-item>
+        <ion-row style="height: 3vh;">
+
+        </ion-row>
+        <ion-list-header  style="--background: #FBFBFB;">
+          <ion-label>Mensaje: <span style="color: red;">(obligatorio)</span></ion-label>
+        </ion-list-header>
+        <ion-item  style="margin-top: -15px; --background: #FBFBFB;">
+          <ion-textarea [(ngModel)]="mensaje" style="background: #F2F2F2; border-radius: 10px !important; padding-left: 10px !important; padding-right: 10px !important;" class="ion-text-warp"  rows="4" placeholder=" Ingrese texto..."></ion-textarea>
+        </ion-item>
+        
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center">
+    <ion-col>
+      <ion-button (click)="onEnviar()" class="boton">Enviar</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

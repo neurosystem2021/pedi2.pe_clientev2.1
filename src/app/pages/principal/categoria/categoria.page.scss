@@ -1,0 +1,34 @@
+ion-item {
+
+    --highlight-background: transparent;
+}
+
+.contenedor, .itemdiv ,.itemlist,.item{
+    --background: #FBFBFB;
+    background: #FBFBFB;
+}
+
+.descrip{
+    overflow: hidden;
+     text-overflow: ellipsis; 
+     display: -webkit-box; -webkit-line-clamp: 1;
+      line-height: 16px; max-height: 32px; -webkit-box-orient: vertical
+}
+
+ion-card{
+    border-radius: 5px;
+}
+
+.contenedorImagen{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+a {
+    color: #01BA76;
+}
+
+* {
+    font-family: Gilroy-Regular;
+  }

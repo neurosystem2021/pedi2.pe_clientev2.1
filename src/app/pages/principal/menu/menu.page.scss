@@ -1,0 +1,189 @@
+.botonIniciarSesion {
+
+  --background: #01BA76;
+  width: 62vw;
+  margin-top: 8px;
+  --border-radius: 50px;
+}
+
+ion-card {
+  border-radius: 15px;
+  --background: #e2f1f1;
+}
+
+
+.contenido {
+  --background: #D9E6E6;
+  background: #D9E6E6;
+}
+
+ion-item {
+  --highlight-background: transparent;
+}
+
+.title{
+  color: black; 
+  font-weight: bold; 
+  font-size: 1.1rem;
+}
+
+ion-input {
+  margin-top: 8px;
+  --background: #D9E6E6;
+  border-radius: 50px;
+  font-size: 16px;
+  height: 37px;
+}
+
+
+ion-button {
+  --highlight-color-focused: none;
+}
+
+a {
+  color: #01BA76;
+}
+
+.toolbarMenu {
+  --background: #D9E6E6;
+}
+
+* {
+  font-family: Gilroy-Medium;
+}
+
+.contenedorFlexTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.contenedorIzq {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  .hello {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: black;
+  }
+}
+
+.icon-mic{
+  font-size: 30px;
+}
+
+.contenedorCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+//Para parpadear
+.parpadea {
+  animation-name: parpadeo;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  --color: black !important;
+  color: black !important;
+  border-color: black !important;
+  font-weight: bold !important;
+
+  ion-icon {
+    --color: black !important;
+    color: black !important;
+  }
+}
+
+@-moz-keyframes parpadeo {
+  0% {
+    opacity: 1.0;
+  }
+
+  50% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+@-webkit-keyframes parpadeo {
+  0% {
+    opacity: 1.0;
+  }
+
+  50% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+@keyframes parpadeo {
+  0% {
+    opacity: 1.0;
+  }
+
+  50% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}
+
+.br-12 {
+  border-radius: 12px;
+}
+
+.br-circle{
+  border-radius: 50%;
+}
+
+.container_categories {
+  display: flex;
+  gap: 1px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+  padding-top: 0;
+  .category {
+    min-width: 90px;
+    margin-right: 1px;
+    padding: 1px;
+    border-radius: 5px;
+    text-align: center;
+    flex-shrink: 0;
+    .name{
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.categories-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.categories-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.categories-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.container_products{
+  
+
+}

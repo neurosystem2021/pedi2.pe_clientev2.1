@@ -1,0 +1,54 @@
+#mapid{
+    display: block;
+    margin: 0 auto; // Make the photo center align
+    width: 100%;    // Adjust the width according to height
+    height: 92vh; 
+}
+.modalHeaderBackground{
+    --background: #FBFBFB;
+    background: #FBFBFB;
+}
+.modalContentBackground{
+    --background: #F4F4F6;  /* fallback for old browsers */
+}
+.btnCurrentCoords{
+    --background: #1D9828;
+}
+.btnAccept{
+    --background: #1D9828;
+}
+
+//Para parpadear
+.parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    --color:black !important;
+    color:black !important;
+    border-color:black !important;
+    font-weight:bold !important;
+    ion-icon{
+      --color:black !important;
+      color:black !important;
+    }
+  }
+  @-moz-keyframes parpadeo{  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+  @-webkit-keyframes parpadeo {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+  }
+  @keyframes parpadeo {  
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }

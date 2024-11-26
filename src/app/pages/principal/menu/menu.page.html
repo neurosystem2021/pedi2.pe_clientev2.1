@@ -1,0 +1,479 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbarMenu">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <img style="width: 48px !important" src="assets/img/logo-login.png" />
+      <ion-button (click)="cambiarDepartamento()">
+        <ion-icon slot="icon-only" name="location-outline"></ion-icon>
+      </ion-button>
+      <ion-label
+        (click)="cambiarDepartamento()"
+        style="font-size: 1rem; text-transform: capitalize"
+      >
+        {{departamentoSelect==null 
+        ? 'Seleccione su ciudad.'
+        : (departamentoSelect|lowercase)}}
+        </ion-label>
+      <ion-button
+        (click)="abrirCarrito()"
+        [ngClass]="{'moverFab': carritoService.obtenerPedidos().length!=0 }"
+      >
+        <ion-badge
+          *ngIf="carritoService.obtenerPedidos().length!=0"
+          color="success"
+        >
+          {{carritoService.obtenerPedidos().length}}
+        </ion-badge>
+        <ion-icon name="cart" style="font-size: 1.5rem; color: #C5000F;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-grid class="contenido">
+    <ion-row>
+      <ion-col size="9" class="contenedorIzq">
+        <div class="hello">
+          Hola {{nombres}} !
+        </div>
+      </ion-col>
+      <ion-col size="3" class="contenedorFlexTop">
+        
+        <ion-buttons>
+          <ion-button
+            style="
+              background: #1d9828;
+              border-radius: 3px;
+              padding: 0;
+              margin-top: auto;
+            "
+            (click)="openSearchVoice()"
+          >
+            <ion-icon
+              style="color: white"
+              name="search"
+            ></ion-icon>
+          </ion-button>
+          <ion-badge
+            *ngIf="herramientasService.obtenerNotificaciones() > 0"
+            color="danger"
+            style="margin-top: -8px"
+            >{{herramientasService.obtenerNotificaciones()}}</ion-badge
+          >
+          <ion-button
+            style="
+              background: #1d9828;
+              border-radius: 3px;
+              padding: 0;
+              margin-top: auto;
+            "
+            (click)="onIrNotificaciones()"
+          >
+            <ion-icon
+              style="color: white"
+              name="notifications-outline"
+            ></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col size="12" class="contenedorIzq" *ngIf="openSearchVoiceStatus">
+        <ion-col size="1">
+          <ion-icon class="icon-mic" *ngIf="!recording" name="mic-outline" (click)="startRecognition()"></ion-icon>
+          <ion-icon class="icon-mic" *ngIf="recording" name="mic-off-outline" (click)="stopRecognition()"></ion-icon>
+        </ion-col>
+        <ion-col size="11">
+          <ion-searchbar
+            [(ngModel)]="busqueda"
+            class="colorBlancoFondo"
+            placeholder="Buscar restaurante"
+            [debounce]="500"
+            (ionInput)="buscarProducto($event)"
+            (ionClear)="onLimpiarBusqueda($event)"
+          ></ion-searchbar>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content class="contenido" id="contenidoPrincipal">
+  <ion-row class="ion-text-center" style="height: auto; margin-top: 3px">
+    <ion-col size="12">
+      <swiper-container autoplay="true" speed="1000">
+        <swiper-slide *ngIf="anuncioCarga==true">
+          <ion-thumbnail style="width: 100vw; height: 145px">
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </ion-thumbnail>
+        </swiper-slide>
+        <swiper-slide *ngIf="anuncios.length==0 && anuncioCarga==false">
+          <img
+            src="assets/img/anuncios/anunciopedi2.png"
+            class="ion-align-self-end"
+            height="145px"
+            style="border-radius: 12px;" 
+          />
+        </swiper-slide>
+        <swiper-slide *ngFor="let anuncio of anuncios">
+          <img src="{{ anuncio.ImagenUrl }}" class="ion-align-self-end" height="145px" style="border-radius: 12px;" />
+        </swiper-slide>
+      </swiper-container>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div class="title">Categorias</div>
+      </ion-col>
+    </ion-row>
+
+    <div class="container_categories">
+      <div class="category" *ngFor="let categoria of categoriaMenu">
+        <img
+          class="br-12"
+          (click)="onIrCategoria(categoria.IdEmpresaCategoria, categoria.EmpresaCategoria)"
+          [src]="categoria.ImagenUrl"
+          alt=""
+          width="70"
+          height="70"
+        />
+        <div class="name">{{ categoria.EmpresaCategoria | titlecase }}</div>
+      </div>
+
+      <ion-col size="12" *ngIf="!CategoriaCorrecto" class="ion-text-center">
+        <ion-button (click)="obtenerCategoriaMenu()" fill="outline"
+          >Actualizar</ion-button
+        >
+      </ion-col>
+    </div>
+
+    <ion-row>
+      <ion-col size="12" class="contenedorIzq">
+        <div class="title">Sub Categorias</div>
+      </ion-col>
+    </ion-row>
+
+    <div class="container_categories">
+      <div class="category" *ngFor="let category of subCategoria">
+        <img
+          class="br-circle"
+          (click)="changeSubCategory(category.name)"
+          [src]="category.ImagenUrlSubCate"
+          alt=""
+          width="50"
+          height="50"
+        />
+        <div class="name">{{ category.name | titlecase }}</div>
+      </div>
+      <ion-col size="12" *ngIf="!CategoriaCorrecto" class="ion-text-center">
+        <ion-button (click)="obtenerCategoriaMenu()" fill="outline"
+          >Actualizar</ion-button
+        >
+      </ion-col>
+    </div>
+
+    <div class="container_products">
+      <ion-grid>
+        <ion-row class="contenedor">
+          <ion-col size="12">
+            <ion-list
+              *ngIf="existeEmpresas"
+              lines="full"
+              class="itemlist contenedor"
+              style="margin-top: -15px"
+            >
+              <div>
+                <br />
+                <ion-label style="margin-left: 10px !important"
+                  >No se encontró empresas para su ubicación</ion-label
+                >
+                <br />
+                <ion-label
+                  style="font-weight: bold; margin-left: 10px !important"
+                  >{{departamentoSelect}}</ion-label
+                >
+              </div>
+            </ion-list>
+            <ion-list *ngIf="estadoCarga==false" class="contenedor">
+              <p style="margin-left: 20px !important ">
+                <ion-skeleton-text
+                  animated
+                  style="width: 30%"
+                ></ion-skeleton-text>
+              </p>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 80%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 70%"
+                    ></ion-skeleton-text>
+                  </p>
+                </ion-label>
+              </ion-item>
+              <p style="margin-left: 20px !important ">
+                <ion-skeleton-text
+                  animated
+                  style="width: 30%"
+                ></ion-skeleton-text>
+              </p>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 80%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 70%"
+                    ></ion-skeleton-text>
+                  </p>
+                </ion-label>
+              </ion-item>
+              <p style="margin-left: 20px !important ">
+                <ion-skeleton-text
+                  animated
+                  style="width: 30%"
+                ></ion-skeleton-text>
+              </p>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 80%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 70%"
+                    ></ion-skeleton-text>
+                  </p>
+                </ion-label>
+              </ion-item>
+              <p style="margin-left: 20px !important ">
+                <ion-skeleton-text
+                  animated
+                  style="width: 30%"
+                ></ion-skeleton-text>
+              </p>
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-label>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 80%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 40%"
+                    ></ion-skeleton-text>
+                  </p>
+                  <p>
+                    <ion-skeleton-text
+                      animated
+                      style="width: 70%"
+                    ></ion-skeleton-text>
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+
+            <div
+              *ngFor="let empresa of showListEmpresas"
+              [hidden]="cargaCompleta"
+            >
+              <ion-card
+                style="
+                  margin-left: 0 !important;
+                  margin-right: 0 !important;
+                  margin-bottom: 2px !important;
+                "
+                (click)="onIrEmpresa(empresa)"
+              >
+                <ion-row class="ion-activatable ripple-parent">
+                  <ion-col class="contenedorImagen" size="3">
+                    <img
+                      onerror="this.src='assets/img/loading.gif';"
+                      src="{{empresa.ImagenUrl}}"
+                    />
+                  </ion-col>
+                  <ion-col size="9">
+                    <ion-row>
+                      <ion-col size="10">
+                        <ion-row style="margin-top: 8px">
+                          <ion-label
+                            style="
+                              font-size: 0.9rem;
+                              font-weight: bold;
+                              color: black;
+                              margin-bottom: 8px;
+                              text-transform: capitalize;
+                            "
+                          >
+                            {{empresa.RazonSocial | lowercase }}
+                          </ion-label>
+                        </ion-row>
+                        <ion-row>
+                          <ion-icon name="location-sharp"></ion-icon>
+                          <ion-label
+                            style="
+                              font-weight: bold;
+                              font-size: 0.79rem;
+                              color: #000028;
+                              text-transform: capitalize;
+                            "
+                          >
+                            {{empresa.Direccion.toLowerCase()}}
+                          </ion-label>
+                        </ion-row>
+                      </ion-col>
+                      <ion-col size="2">
+                        <ion-buttons>
+                          <ion-button style="margin-top: -15px">
+                            <ion-icon
+                              slot="icon-only"
+                              name="bookmark-outline"
+                            ></ion-icon>
+                          </ion-button>
+                        </ion-buttons>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row style="margin-top: -5px">
+                      <ion-col
+                        size="8"
+                        style="
+                          align-items: center;
+                          display: flex;
+                          justify-content: flex-start;
+                        "
+                      >
+                        <ion-icon color="warning" name="star-sharp"></ion-icon>
+                        <ion-label
+                          style="
+                            font-weight: bold;
+                            font-size: 0.79rem;
+                            color: black;
+                            text-transform: capitalize;
+                            margin-left: 5px !important;
+                          "
+                          >{{empresa.Puntuacion}}</ion-label
+                        >
+                        <ion-icon
+                          style="margin-left: 10px"
+                          color="dark"
+                          name="time-outline"
+                        ></ion-icon>
+                        <ion-label
+                          style="
+                            font-weight: bold;
+                            font-size: 0.79rem;
+                            color: darkblue;
+                            margin-left: 5px !important;
+                          "
+                        >
+                          {{empresa.HorarioInicio.substring(0,5)}} -
+                          {{empresa.HorarioFin.substring(0,5)}}
+                        </ion-label>
+                      </ion-col>
+                      <ion-col size="4" class="ion-text-end">
+                        <ion-badge
+                          *ngIf="verificarHora(empresa.HorarioInicio,empresa.HorarioFin); else templateName"
+                          style="
+                            font-size: 0.75rem;
+                            margin-left: 10px;
+                            width: 58px;
+                            --background: #1d9828;
+                          "
+                          mode="ios"
+                          >Abierto</ion-badge
+                        >
+                        <ng-template #templateName>
+                          <ion-badge
+                            style="
+                              font-size: 0.75rem;
+                              margin-left: 10px;
+                              width: 58px;
+                            "
+                            color="medium"
+                            mode="ios"
+                            >Cerrado</ion-badge
+                          >
+                        </ng-template>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-ripple-effect></ion-ripple-effect>
+                </ion-row>
+              </ion-card>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-grid>
+
+  <!-- <ion-fab
+    [ngClass]="{'moverFab': carritoService.obtenerPedidos().length!=0 }"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+  >
+    <ion-badge
+      *ngIf="carritoService.obtenerPedidos().length!=0"
+      color="danger"
+      style="margin-bottom: -18px !important; margin-left: 40px"
+    >
+      {{carritoService.obtenerPedidos().length}}
+    </ion-badge>
+    <ion-fab-button
+      (click)="abrirCarrito()"
+      size="small"
+      style="--background: #1d9828"
+    >
+      <ion-icon name="cart-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>

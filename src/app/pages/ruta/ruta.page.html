@@ -1,0 +1,128 @@
+<ion-content>
+  <div id="weathermap">
+    <div id='mapid'></div>
+  </div>
+
+  <ion-fab #fab horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button color="primary">
+      <ion-icon name="caret-down"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button (click)="abrirCarritoRuta()" color="warning">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!(this.herramientasService.obtenerEstado()=='E' || this.herramientasService.obtenerEstado()=='PE')" (click)="OnMostrarMotorizado()" color="light">
+        <ion-icon name="bicycle-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="this.herramientasService.obtenerEstado()=='E'" (click)="onCancelarPedido()" color="danger">
+        <ion-icon name="close-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="onSalir()" color="dark">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-fab #fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 60px;">
+    <ion-fab-button size="small" color="success" (click)="getPedidoExistente()">
+      <ion-icon name="sync-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" style="width: 95vw;">
+    <ion-row>
+      <ion-col size="9" >
+         
+      </ion-col>
+      <ion-col size="3">
+        <ion-badge style='margin-bottom:-20px !important; margin-left: 18vw;'  *ngIf="mensajesSinLeer>0" color="danger">{{mensajesSinLeer}}</ion-badge>
+        <div style="direction: rtl; margin-right: 60px;">
+          <ion-badge style='margin-bottom:-40px !important' *ngIf="mensajesSinLeer>0" color="medium">{{mensajeNuevo}}</ion-badge>
+        </div>
+        <ion-fab-button style="margin-left: 3.7vh;" *ngIf="!(this.herramientasService.obtenerEstado()=='E' || this.herramientasService.obtenerEstado()=='PE')" (click)="abrirChat()" color="success">
+          <ion-icon name="chatbox"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-card style="border-radius: 15px; background: #e9f3f3">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="3" class="flexCenter">
+            <ion-icon style="font-size: 1.2rem;  border-radius: 100px;  padding: 6px;" [ngClass]="herramientasService.obtenerPosition()>0? 'activo' : 'inactivo'" name="call-sharp"></ion-icon>
+          </ion-col>
+          <ion-col size="3" class="flexCenter">
+            <ion-icon style="font-size: 1.2rem; border-radius: 100px;  padding: 6px;" [ngClass]="herramientasService.obtenerPosition()>1? 'activo' : 'inactivo'" name="fast-food-sharp"></ion-icon>
+          </ion-col>
+          <ion-col size="3" class="flexCenter">
+            <ion-icon style="font-size: 1.2rem; border-radius: 100px;  padding: 6px;" [ngClass]="herramientasService.obtenerPosition()>2? 'activo' : 'inactivo'" name="bicycle-sharp"></ion-icon>
+          </ion-col>
+          <ion-col size="3" class="flexCenter">
+            <ion-icon style="font-size: 1.2rem; border-radius: 100px;  padding: 6px;" [ngClass]="herramientasService.obtenerPosition()>3? 'activo' : 'inactivo'" name="home-sharp"></ion-icon>
+          </ion-col>
+          <ion-col size="12">
+            <div [ngSwitch]="herramientasService.obtenerEstado()">
+              <ion-progress-bar *ngSwitchCase="'E'" value="0.25" buffer="0.25" style="--background: #1D9828; --progress-background: #1D9828;"></ion-progress-bar>
+              <ion-progress-bar *ngSwitchCase="'PE'" value="0.25" buffer="0.50" style="--background: #1D9828; --progress-background: #1D9828;"></ion-progress-bar>
+              <ion-progress-bar *ngSwitchCase="'PU'" value="0.25" buffer="0.75" style="--background: #1D9828; --progress-background: #1D9828;"></ion-progress-bar>
+              <ion-progress-bar *ngSwitchCase="'UC'" value="0.25" buffer="1" style="--background: #1D9828; --progress-background: #1D9828;"></ion-progress-bar>
+              <ion-progress-bar *ngSwitchCase="'F'" value="0.25" buffer="1"  color="danger"></ion-progress-bar>
+              <ion-progress-bar *ngSwitchCase="'C'" value="0.25" buffer="1" color="danger"></ion-progress-bar>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="border-top: 1px solid grey; margin-top: 10px;">
+          <ion-col size="12">
+            <div [ngSwitch]="herramientasService.obtenerEstado()">
+              <ion-label *ngSwitchCase="'E'" style="margin-top:3px; margin-left: 2px;">
+                <span style="font-weight: bold; color: black;">
+                  ¡Pedido realizado! Espere su confirmación.
+                </span>
+              </ion-label>
+    
+    
+              <ion-label *ngSwitchCase="'PE'" style="margin-top:3px; margin-left: 2px;">
+                <span *ngIf="tieneSistema==1; else elseBlock" style="font-weight: bold; color: black;">Su pedido está siendo preparado.</span>
+                <ng-template #elseBlock>
+                  <span style="font-weight: bold; color: black;">
+                    Pedido aceptado, esperando repartidor.
+                  </span>
+                </ng-template>
+              </ion-label>
+    
+    
+              <ion-label *ngSwitchCase="'PU'" style="margin-top:3px; margin-left: 2px;">
+                <span *ngIf="tieneSistema==1; else elseBlock2" style="font-weight: bold; color: black;">Su pedido está en camino a su ubicación.</span>
+                <ng-template #elseBlock2>
+                  <span style="font-weight: bold; color: black;">
+                    Comprando y en camino a su ubicación.
+                  </span>
+                </ng-template>
+              </ion-label>
+    
+              <ion-label *ngSwitchCase="'UC'" style="margin-top:3px; margin-left: 2px;">
+                <span style="font-weight: bold; color: black;">
+                  El repartidor ha llegado a su ubicación.
+                </span>
+              </ion-label>
+    
+              <ion-label *ngSwitchCase="'F'" style="margin-top:3px; margin-left: 2px;">
+                <span style="font-weight: bold; color: black;">
+                  Pedido completado.
+                </span>
+              </ion-label>
+    
+              <ion-label *ngSwitchCase="'C'" style="margin-top:3px; margin-left: 2px;">
+                <span style="font-weight: bold; color: black;">
+                  Pedido cancelado.
+                </span>
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-fab>
+
+
+</ion-content>

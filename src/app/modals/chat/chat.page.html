@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar style="--background: #128c7e;font-weight: 700;color: white;">
+    <ion-title style="font-size: 1rem;">{{nombreMotorizado}}</ion-title>
+    <ion-buttons (click)="dismiss()" slot="start">
+      <ion-icon size="large" name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="llamarMotorizado()">
+        <ion-icon style="font-weight: bold; color: white; font-size: 1.5rem;"  name="call-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="chatContent" [scrollEvents]="true" #content>
+  <div>
+    <li #allTheseThings class="liChat" *ngFor="let item of mensajes">
+      <ion-label [ngClass]="item.motorizado ? 'youClass' : 'mineClass'">{{item.msg}}</ion-label>
+    </li>
+  </div>  
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="chatFooter">
+    <ion-item lines="none" class="chatFooter sendMsgItem">
+      <ion-input #inputid style="--padding-start: 10px;" [(ngModel)]='nuevaEntrada' placeholder="Escribe un mensaje..." (keyup.enter)="enviarMensaje()" type="text" class="inputSendMsg"></ion-input>
+      <ion-buttons >
+        <ion-button class="btnSendMsg" (click)="enviarMensaje()">
+          <ion-icon  slot="icon-only" name="send"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

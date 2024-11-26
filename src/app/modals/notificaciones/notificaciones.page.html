@@ -1,0 +1,67 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #FBFBFB;">
+    <ion-buttons slot="start">
+      <ion-button (touchend)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Mis Notificaciones
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondoColor">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card *ngIf="existeNotificaciones">
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="12" class="ion-text-center">
+                <ion-text style="color: #1D9828;">
+                  <h1>No tiene notificaciones</h1>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
+
+        <ion-card *ngFor="let notificacion  of notificaciones" style="margin-left: 0 !important;
+        margin-right: 0 !important; margin-bottom: 3px !important;" >
+          <ion-card-content [ngClass]="{'sinLeer': notificacion.Leido == 0 }">
+            <ion-row>
+              <ion-col class="contenedorImagen" size="2">
+                <ion-img src="{{notificacion.UrlImagen}}"></ion-img>
+              </ion-col>
+              <ion-col size="9">
+                <ion-text class="ion-text-justify" style="color: black; font-weight: bold; text-transform: capitalize;">
+                  {{notificacion.Mensaje | lowercase}}
+                </ion-text>
+                <br>
+                <ion-note style="text-transform: capitalize;">
+                  {{obtenerFecha(notificacion.FechaReg)}}
+                </ion-note>
+              </ion-col>
+              <ion-col size="1" class="contenedorImagen">
+                <ion-buttons>
+                  <ion-button (click)="borrar(notificacion.IdNotificacion)">
+                    <ion-icon color="danger" style="font-weight: bold; " slot="icon-only" name="trash-outline">
+                    </ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

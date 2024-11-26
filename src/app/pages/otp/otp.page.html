@@ -1,0 +1,57 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #FBFBFB;">
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Verificar Teléfono
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #FBFBFB;">
+  <ion-grid fixed>
+    <ion-row style="height: 2vh;">
+    </ion-row>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10"  class="ion-text-center">
+        <img class="imagen" src="assets/img/otp.png">
+        <br>
+        <ion-text color="dark" style="font-style: 1.8rem;">
+          <span style="text-transform: capitalize; font-weight: bold;">{{nombre | lowercase}}</span> le enviamos un código por mensaje de texto al <span style="font-weight: bold;">{{telefono}}</span>,
+          por favor ingrese el código.
+        </ion-text>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+       <ion-input type="text" class="otp" #otp1 required="true" pattern="[0-9]{6}" maxLength="1" [(ngModel)] ="otp.first" (keyup)="otpController($event,otp2,'')">
+       </ion-input>
+       <ion-input type="text" class="otp" #otp2 required="true" pattern="[0-9]{6}" maxLength="1" [(ngModel)]="otp.second" (keyup)="otpController($event,otp3,otp1)">
+       </ion-input>
+       <ion-input type="text" class="otp" #otp3 required="true" pattern="[0-9]{6}" maxLength="1" [(ngModel)]="otp.third"  (keyup)="otpController($event,otp4,otp2)">
+       </ion-input>
+       <ion-input type="text" class="otp" #otp4 required="true" pattern="[0-9]{6}" maxLength="1" [(ngModel)]="otp.forth"  (keyup)="otpController($event,'',otp3)">
+      </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-text color="dark">
+          ¿No el recibió un código? <a *ngIf="habilitar" (click)="reenviar()" style="color: #1D9828; font-weight: bold;">Reenviar</a>
+        </ion-text>
+        <ion-text color="primary" *ngIf="!habilitar">
+          <h1>{{contador}}</h1>
+          <ion-label *ngIf="contador!=''">Para reenviar nuevamente</ion-label>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-button (click)="validar()" style="--background: #1D9828;">
+          Verificar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

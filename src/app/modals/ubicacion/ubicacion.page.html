@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar class="modalHeaderBackground">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Dirección de Entrega
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="help-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="modalContentBackground">
+  <div id="mapid">
+  </div>
+  <ion-fab vertical="bottom" style="width: 95vw;" horizontal="start" slot="fixed">
+    <ion-row>
+      <ion-col size="12">
+        <ion-searchbar debounce="300" placeholder="Buscar ciudad" [(ngModel)]="ciudadBusqueda" (keydown)="obtenerCoordsfFromName()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: -10px;">
+      <ion-col size="12">
+        <ion-button (click)="toAccept()" expand="block" style="font-weight: bold;" class="btnCurrentCoords">
+          Guardar Ubicación <ion-icon style="margin-left: 5px;" name="save-sharp"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-fab>
+  <ion-fab vertical="top" horizontal="end" style="margin-bottom: calc(15vh + 10px) ;" slot="fixed">
+    <ion-fab-button (touchend)="getCurrentCoordinates()" size="small" color="primary">
+      <ion-icon name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,30 @@
+.headerBackground{
+    min-height: 100px;
+    --background: #F0C911;;
+    //background-image: url("../../../assets/icon/diagmonds.png");
+}
+.sidebarElements{
+    padding: 0px 0px;
+    margin-left: 10px;
+}
+.sidebarItem{
+    font-weight: 500;
+}
+.avatarName{
+    color: white;
+    font-weight: 600;
+}
+.avatarPhone{
+    color: white;
+    font-weight: 500;
+}
+.menuAvatar{
+    margin-top: 20px;
+    margin-left: 4px;
+    min-height: 50px;
+    min-width: 50px;
+}
+
+ion-img{
+    width: 50vw;
+}

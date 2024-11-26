@@ -1,0 +1,90 @@
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <br>
+        <br>
+        <ion-label style=" font-style: italic; font-weight: bold; font-size: 40px;">Pedi2.pe!</ion-label>
+
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 10vh;"></ion-row>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <swiper-container [options]="slideOpts">
+          <swiper-slide>
+            <ion-list class="lista">
+              <img src="assets/img/food.png">
+              <br>
+              <ion-label style="font-weight: bold; font-size: 22px;">
+                Comida Fresca
+              </ion-label>
+              <br>
+              <br>
+            </ion-list>
+          </swiper-slide>
+          <swiper-slide>
+            <ion-list class="lista">
+              <img src="assets/img/vehiculo.png">
+              <br>
+              <ion-label style="font-weight: bold; font-size: 22px;">
+                Delivery Rápido
+              </ion-label>
+              <br>
+              <br>
+
+            </ion-list>
+          </swiper-slide>
+          <swiper-slide>
+            <ion-list class="lista">
+              <img src="assets/img/pago.png">
+              <br>
+              <ion-label style="font-weight: bold; font-size: 22px;">
+                Pago Fácil
+              </ion-label>
+              <br>
+              <br>
+           
+            </ion-list>
+          </swiper-slide>
+        </swiper-container> 
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" class="ion-text-left">
+        <ion-buttons>
+          <ion-button *ngIf="posicion!=1" (click)="onAtras()">
+            <ion-label style="font-size: 2.3vh; font-weight: bold;">Atrás</ion-label>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-col>
+      <ion-col style="margin-top: 1vh;" size="4" class="ion-text-center">
+        <ion-icon style="border-radius: 50px; color: #F0C911;" [ngStyle]="{'background':posicion === 1 ? '#F0C911' : 'white' }"
+          name="ellipse-outline"></ion-icon>
+        <ion-icon style="border-radius: 50px; color: #F0C911;" [ngStyle]="{'background':posicion === 2 ? '#F0C911' : 'white' }"
+          name="ellipse-outline"></ion-icon>
+        <ion-icon style="border-radius: 50px; color: #F0C911;" [ngStyle]="{'background':posicion === 3 ? '#F0C911' : 'white' }"
+          name="ellipse-outline"></ion-icon>
+      </ion-col>
+      <ion-col size="4" class="ion-text-right">
+        <ion-buttons>
+          <ion-button (click)="onComenzar()" *ngIf="posicion==3">
+            <ion-label style="font-size: 2.3vh;  font-weight: bold; color: #F0C911;">Empezar</ion-label>
+          </ion-button>
+          <ion-button *ngIf="posicion!=3" (click)="onSiguiente()">
+            <ion-label style="font-size: 2.3vh;  font-weight: bold;">Siguiente</ion-label>
+          </ion-button>
+
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar class="modalHeaderBackground" style="--background: #D9E6E6;">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Nueva Dirección
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="help-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="modalContentBackground">
+  <div id="mapid">
+  </div>
+  <ion-fab vertical="bottom" style="width: 95vw;" horizontal="start" slot="fixed">
+    <ion-row>
+      <ion-col size="12">
+        <ion-card style="background: #e9f3f3">
+          <ion-card-content>
+            <ion-label style="font-weight: bold; color:black ;">Direccion: (Av. o Jr. - Número - Distrito)</ion-label>
+            <ion-textarea [ngClass]="{'parpadea': direccionAlerta }" [(ngModel)]="direccion" style="text-transform: uppercase; font-weight: 400; color:black ;" rows="2" class="textAreaIndicaciones" placeholder="EJEMPLO: JR. FLORES MZ G4 LT 1 AMARILIS"></ion-textarea>
+            <ion-label style="font-weight: bold; color:black ;">Referencias de su dirección:</ion-label>
+            <ion-textarea [ngClass]="{'parpadea': referenciaAlerta }" [(ngModel)]="referencia" style="text-transform: uppercase; font-weight: 400; color:black ;" rows="2" class="textAreaIndicaciones" placeholder="EJEMPLO: AL 2 CUADRAS DEL PARQUE"></ion-textarea>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: -10px;">
+      <ion-col size="12">
+        <ion-button (click)="toAccept()" expand="block" style="font-weight: bold;" class="btnCurrentCoords">
+          Guardar Dirección <ion-icon style="margin-left: 5px;" name="save-sharp"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-fab>
+  <ion-fab vertical="top" horizontal="end" style="margin-bottom: calc(15vh + 10px) ;" slot="fixed">
+    <ion-fab-button [ngClass]="{'parpadea': latlonAlerta }" (touchend)="getCurrentCoordinates()" size="small" color="primary">
+      <ion-icon name="locate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

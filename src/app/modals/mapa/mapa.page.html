@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar  style="--background: #FBFBFB;">
+    <ion-buttons slot="start">
+      <ion-button (touchend)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Ubicación / Dirección
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="locate-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div id="weathermap">
+    <div id='mapid'></div>
+  </div>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" style="width: 95vw;">
+    <ion-card style="border-radius: 5px;">
+      <ion-card-content>
+         <ion-row>
+           <ion-col size="2" style="border-right: 2px solid black;" class="contenedorFlex">
+            <ion-icon style="font-size: 2.2rem; color: #1D9828" name="map-sharp"></ion-icon>
+           </ion-col>
+          <ion-col size="10" class="ion-text-center">
+            <ion-text style="font-weight: bold; color: black;">
+              {{direccion}}
+            </ion-text>
+            <br>
+            <ion-text style="font-weight: bold; color: black;">
+              {{distrito}} 
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-fab>
+</ion-content>

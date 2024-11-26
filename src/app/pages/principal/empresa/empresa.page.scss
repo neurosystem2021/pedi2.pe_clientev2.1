@@ -1,0 +1,309 @@
+.imageEmpresa {
+  overflow: hidden;
+  width: 80%;
+  height: 14vh;
+  object-fit: contain;
+  object-position: center center;
+  background-color: #d9e6e6;
+}
+
+.imageProducto {
+  //border: 0.5px solid gray;
+  //border-radius: 10% !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  margin-bottom: 5px;
+  overflow: hidden;
+  width: 100%;
+  height: 15vh;
+  object-fit: cover;
+  object-position: center center;
+}
+ion-card {
+  border-radius: 7px;
+  --background: #e2f1f1;
+  //box-shadow:  10px 10px 24px -12px rgba(0,0,0,0.75) !important;
+}
+
+.card{
+  border-radius: 7px;
+  background-color: #e2f1f1;
+  margin-bottom: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+.contenedorColor,
+.itemdiv,
+.itemlist,
+.item {
+  --background: #d9e6e6;
+  background: #d9e6e6;
+  // --background: red;
+  //background: red;
+}
+
+.contenedorCuper {
+  --background: #d9e6e6;
+  background: #d9e6e6;
+  // --background: red;
+  //background: red;
+}
+
+.contenedorFlex {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.icon-mic{
+  font-size: 30px;
+}
+
+.boton {
+  font-weight: bold;
+  font-size: 14px;
+}
+.descrip {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-height: 16px;
+  max-height: 32px;
+  -webkit-box-orient: vertical;
+}
+
+.info {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.columna {
+  border-radius: 10px !important;
+  background: #d9e6e6;
+}
+
+ion-segment::-webkit-scrollbar {
+  display: none;
+}
+
+ion-segment{
+  --background: #D9E6E6
+}
+
+ion-segment-button {
+  --color-checked: #1d9828;
+  --indicator-color: #1d9828;
+  --ripple-color: transparent;
+  --background-hover: transparent !important;
+}
+
+.labelCategoria {
+  font-weight: bold;
+}
+
+.contenedorIzq {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.contenedorDer {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contenedorCentroGrid {
+  display: grid;
+  align-content: center;
+  align-items: center;
+}
+
+.textAreaIndicaciones {
+  padding: 2px;
+  border: 1px solid #e40033;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+}
+
+.unaLinea {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-height: 16px;
+  max-height: 32px;
+  -webkit-box-orient: vertical;
+}
+
+.imagen {
+  border-radius: 10px;
+  overflow: hidden;
+  height: 23vw;
+  width: 23vw;
+  object-fit: cover;
+  object-position: center center;
+  margin-left: -15px;
+  z-index: 8;
+}
+
+.contenidoProductos {
+  z-index: 99;
+  --background: #d9e6e6;
+}
+
+* {
+  font-family: Gilroy-Regular;
+}
+
+//Para parpadear
+.parpadea2 {
+  animation: mymove 1.5s infinite;
+}
+
+@keyframes mymove {
+  50% {
+    font-size: 40px;
+  }
+}
+
+.send {
+  position: relative;
+  z-index: 9999999999999;
+  animation: moveUpWithFade 2s linear infinite;
+}
+
+@keyframes moveUpWithFade {
+  0% {
+    width: 18vw;
+    height: 18vw;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  40% {
+    width: 15vw;
+    height: 15vw;
+    transform: translateX(-100vw);
+  }
+  80% {
+    position: fixed;
+    top: 3vh;
+    right: 4.5vw;
+    width: 10vw;
+    height: 10vw;
+  }
+  100% {
+    position: fixed;
+    top: 2vh;
+    right: 4.5vw;
+    width: 4vw;
+    height: 4vw;
+  }
+}
+
+.parpadea {
+  animation-name: parpadeo;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  --color: black !important;
+  color: black !important;
+  border-color: black !important;
+  font-weight: bold !important;
+  ion-icon {
+    --color: black !important;
+    color: black !important;
+  }
+}
+
+.colorBlancoFondo {
+  background-color: #d9e6e6;
+  --background: #d9e6e6;
+}
+
+.esoferta {
+  --color: black !important;
+  color: black !important;
+  border-color: black !important;
+  font-weight: bold !important;
+}
+
+.parpadeaOferta {
+  animation-name: parpadeo;
+  animation-duration: 1.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1.2s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.parpadeaAcciones * {
+  animation-name: parpadeo;
+  animation-duration: 1.8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1.8s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.bg-img-title {
+  position: absolute;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2rem;
+  top: 0;
+  right: 0;
+  text-shadow: 0 0 2px #fff;
+  z-index: 10;
+  background: white;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: red;
+}
+
+.parpadeaOfertaOpc * {
+  animation-name: parpadeo;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: parpadeo;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  color: red;
+  --color: red !important;
+}
+
+//ion-content {--overflow: hidden}
+
+.vaiven {
+  animation: vaiven 1s infinite;
+}
+@keyframes vaiven {
+  15% {
+    transform: translateX(-25%) rotate(-10deg);
+  }
+  30% {
+    transform: translateX(20%) rotate(5deg);
+  }
+  45% {
+    transform: translateX(-10%) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(5%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-3%) rotate(-1deg);
+  }
+}

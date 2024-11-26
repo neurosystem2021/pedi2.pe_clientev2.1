@@ -1,0 +1,140 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="onIrLogin()" default-href=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row style="height: 1.5vh"></ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-label style="color: black; font-weight: bold; font-size: 35px"
+          >Crear Cuenta</ion-label
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="height: 1.5vh"></ion-row>
+
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10" class="ion-text-center">
+        <swiper-container [modules]="swiperModules" [options]="slideOptsOne" #swiper>
+          <swiper-slide>
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label style="color: #d4d4d4; font-size: 20px"
+                  >Datos de inicio:</ion-label
+                >
+              </ion-item>
+              <ion-item [ngClass]="{'parpadea': numeroAlerta }">
+                <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+                <ion-label position="floating">Celular</ion-label>
+                <ion-input
+                  [(ngModel)]="celular"
+                  type="number"
+                  maxlength="9"
+                ></ion-input>
+              </ion-item>
+              <br />
+              <!--<ion-item [ngClass]="{'parpadea': numeroAlerta }">
+              <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
+              <ion-label position="floating">Repite Celular</ion-label>
+              <ion-input [(ngModel)]="celular2" 
+                type="number"></ion-input>
+            </ion-item>
+            <br>-->
+              <ion-item [ngClass]="{'parpadea': passwordAlerta }">
+                <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+                <ion-label position="floating">Contraseña</ion-label>
+                <ion-input #passinput [(ngModel)]="pin" type="password">
+                </ion-input>
+                <ion-buttons slot="end" style="position: absolute; right: 0">
+                  <ion-button
+                    class="type-toggle"
+                    slot="end"
+                    (click)="toggleShow()"
+                  >
+                    <ion-icon
+                      [name]="(showPassword)?'eye-off':'eye'"
+                    ></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+              <br />
+              <!--<ion-item [ngClass]="{'parpadea': passwordAlerta }">
+              <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+              <ion-label position="floating">Repite Contraseña</ion-label>
+              <ion-input #passinput2 [(ngModel)]="pin2"
+                type="password">
+              </ion-input>
+              <ion-buttons slot="end" style="position: absolute; right: 0;">
+                <ion-button class="type-toggle"  slot="end" (click)="toggleShow2()">
+                  <ion-icon  [name]="(showPassword2)?'eye-off':'eye'"></ion-icon>
+               </ion-button>
+              </ion-buttons>
+            </ion-item>
+            <br>-->
+              <br />
+            </ion-list>
+          </swiper-slide>
+          <swiper-slide>
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label class="texto" style="color: #d4d4d4; font-size: 20px"
+                  >Nombre y Apellido:</ion-label
+                >
+              </ion-item>
+              <!--<div style="position: absolute; z-index: 2; right: 0;">
+                <ion-button (click)="onBuscarDni()" size="small" fill="solid" [disabled]="dni.trim().length!=8" color="primary">
+                  <ion-icon name="search-outline"></ion-icon>
+                  Buscar
+                </ion-button>
+              </div>
+              <ion-item [ngClass]="{'parpadea': dniAlerta }">
+                <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+                <ion-label position="floating">DNI</ion-label>
+                <ion-input [(ngModel)]="dni" 
+                  type="text" maxlength="8">
+                </ion-input>
+              </ion-item>-->
+              <br />
+              <ion-item>
+                <ion-icon slot="start" name="clipboard-outline"></ion-icon>
+                <!--<ion-label position="floating">Nombres</ion-label>-->
+                <ion-input [(ngModel)]="nombres" type="text" class="upper">
+                </ion-input>
+              </ion-item>
+              <!--<br>
+              <ion-item>
+                <ion-icon slot="start" name="clipboard-outline"></ion-icon>
+                <ion-label position="floating">Apellidos</ion-label>
+                <ion-input [(ngModel)]="apellidos" 
+                  type="text" class="upper"></ion-input>
+              </ion-item>-->
+            </ion-list>
+          </swiper-slide>
+        </swiper-container>
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+    <ion-row style="height: 2vh"></ion-row>
+
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button class="boton" (click)="slideNext()"
+          >{{accionBoton}}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <a (click)="onIrLogin()">Inicia sesión </a>
+        <ion-label>si ya tienes una cuenta! </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

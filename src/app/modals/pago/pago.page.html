@@ -1,0 +1,107 @@
+
+<ion-header class="ion-no-border headerBackground">
+  <ion-toolbar  class="headerBackground" style="--background: #D9E6E6;">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Método de Pago
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="help-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modalContentBackground">
+  <ion-row>
+    <ion-col size="12">
+      <ion-item-divider class="headerBackground">
+        <ion-icon name="wallet-sharp" style="color:#F0C911;"></ion-icon>
+        <ion-label style="margin-left: 5px; font-size: 1rem;"><span style="color: black;">Monto Total a Pagar: </span> <span style="color: black; font-weight: bold;">{{(PrecioProductos + PrecioDelivery) | currency:'PEN':'S/ ':'1.2-2'}}</span></ion-label>
+      </ion-item-divider>
+    </ion-col>
+  </ion-row>
+  <ion-list class="headerBackground">
+    <ion-radio-group name="radio-group" (ionChange)="radioGroupChange($event)" #radioGroup>
+      <ion-list-header>
+        <ion-label style="font-weight: bold; font-size: 1.1rem;">Selecciona un método de pago</ion-label>
+      </ion-list-header>
+      <ion-item lines="none" class="headerBackground">
+        <ion-icon class="icono" style="margin-right: 5px !important;" src="../../../assets/icon/yape.svg"></ion-icon>
+        <ion-label style="font-size: 1rem;">Yape (Recomendado)</ion-label>
+        <ion-radio slot="start" name="radio_list" value="radio_1"
+          class="radioClass" disabled="false"></ion-radio>
+      </ion-item>
+      <div *ngIf="contenidoA" class="contenidoRButton">
+        Yapea al driver cuando te entregue el pedido.
+      </div>
+      <ion-item lines="none" class="headerBackground">
+        <ion-icon class="icono"  style="margin-right: 5px !important;" src="../../../assets/icon/plin.svg"></ion-icon>
+        <ion-label style="font-size: 1rem;">Plin</ion-label>
+        <ion-radio slot="start" name="radio_list" value="radio_2"
+        class="radioClass" disabled="false"></ion-radio>
+      </ion-item>
+      <div *ngIf="contenidoB" class="contenidoRButton">
+        Usa plin para pagar al driver cuando te entregue el pedido.
+      </div>
+      <ion-item lines="none" class="headerBackground">
+        <ion-icon class="icono"  style="margin-right: 5px !important;" src="../../../assets/icon/tarjeta.svg"></ion-icon>
+        <ion-label style="font-size: 1rem;">Tarjeta</ion-label>
+        <ion-radio slot="start" name="radio_list" value="radio_3"
+        class="radioClass" disabled="false"></ion-radio>
+      </ion-item>
+      <div *ngIf="contenidoC" class="contenidoRButton">
+        El motorizado llevará un equipo para validar su tarjeta.
+      </div>
+      <ion-item lines="none" class="headerBackground">
+        <ion-icon class="icono"  style="margin-right: 5px !important;" src="../../../assets/icon/salary.svg"></ion-icon>
+        <ion-label style="font-size: 1rem;">Efectivo</ion-label>
+        <ion-radio slot="start" name="radio_list" value="radio_4"
+        class="radioClass" disabled="false"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <div *ngIf="contenidoD" class="contenidoRButton">
+      <ion-list class="headerBackground">
+        <ion-radio-group name="radio-group2" (ionChange)="radioGroupTwoChange($event)" #radioGroup2>
+          <ion-list-header>
+            <ion-label style="font-weight: bold; font-size: 0.9rem;">¿Su pago es exacto o requiere cambio?</ion-label>
+          </ion-list-header>
+          <ion-item lines="none" class="headerBackground">
+            <ion-label>Exacto</ion-label>
+            <ion-radio slot="start" name="radio_list2" value="subradio_1"
+            class="radioClass" disabled="false"></ion-radio>
+          </ion-item>
+          <ion-item lines="none" class="headerBackground">
+            <ion-label>Cambio</ion-label>
+            <ion-radio slot="start" name="radio_list2" value="subradio_2"
+            class="radioClass" disabled="false"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <div *ngIf="subcontenido" class="subcontenido">
+          <ion-label style="font-weight: bold; font-size: 0.9rem;">Ingrese el monto con el que pagará</ion-label>
+          <br>
+          <ion-item class="inputMonto" class="headerBackground">
+            <ion-label style="font-weight: bold; font-size: 2.5rem;">S/ </ion-label>
+            <ion-input [(ngModel)]="monto" #input type="number" style="font-weight: bold; font-size: 2.5rem;"></ion-input>
+          </ion-item>
+        </div>
+      </ion-list>
+    </div>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border headerBackground">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)="aceptarMetodoPago()" style="font-weight: bold; --background:#1D9828; font-size: 16px;" expand="block">GUARDAR PAGO </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br>
+</ion-footer>

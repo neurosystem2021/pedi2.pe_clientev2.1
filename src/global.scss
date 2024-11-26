@@ -1,0 +1,107 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.headerAction {
+  --color: black !important;
+  font-weight: bold;
+  padding: 0;
+
+  --background: #f2f2f2;
+  .action-sheet-title {
+    margin-bottom: -20px;
+  }
+  .action-sheet-icon {
+    --color: #f0c911 !important;
+    margin-right: 7px;
+  }
+}
+
+.primarybtn.sc-ion-alert-ios {
+  color: #196d20;
+  font-size: larger;
+  font-weight: bold;
+  //text-transform: capitalize;
+}
+
+.secondarybtn.sc-ion-alert-ios {
+  color: #23c931;
+  font-size: larger;
+  font-weight: normal;
+  // text-transform: capitalize;
+}
+//fin de alerta carrito
+
+.promoalerta {
+  .alert-title.sc-ion-alert-ios {
+    text-transform: capitalize;
+  }
+  .alert-sub-title.sc-ion-alert-ios {
+    color: #01ba76;
+  }
+}
+
+@keyframes anima {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  85% {
+    transform: rotate(10deg);
+  }
+  95% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.moverFab {
+  display: inline-block;
+  animation: anima 1.2s infinite;
+}
+
+.my-custom-alert {
+  z-index: 10000;
+}
+
+.headerAction {
+  --color: black !important;
+  font-weight: bold;
+  padding: 0;
+
+  --background: #f2f2f2;
+  .action-sheet-title {
+    margin-bottom: -20px;
+  }
+  .action-sheet-icon {
+    --color: #1d9828 !important;
+    margin-right: 7px;
+  }
+}

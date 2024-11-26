@@ -1,0 +1,178 @@
+<ion-header class="contenedor ion-no-border">
+
+  <ion-toolbar style="--background: #FBFBFB;">
+    <ion-buttons slot="start">
+      <ion-back-button style="font-weight: bold; color: black;" (touchend)="onIrPrincipalMenu()" default-href="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      {{nombreCategoria | lowercase}}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="abrirCarrito()" [ngClass]="{'moverFab': carritoService.obtenerPedidos().length!=0 }">
+        <ion-badge *ngIf="carritoService.obtenerPedidos().length!=0" color="success">
+          {{carritoService.obtenerPedidos().length}}
+        </ion-badge>
+        <ion-icon name="cart" color="danger" style="font-size: 1.5rem;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-row style="margin-bottom: -10px;">
+    <ion-col size="12">
+      <ion-searchbar placeholder="BUSCAR EN {{nombreCategoria}}" debounce="500" (ionChange)="buscarEmpresa($event)"  (ionCancel)="onCancel()"></ion-searchbar>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content class="contenedor"  [fullscreen]="true">
+  <ion-grid>
+    <ion-row style="margin-top: 10px;" class="contenedor">
+      <ion-col size="12">
+        <ion-list *ngIf="existeEmpresas" lines="full" class="itemlist contenedor" style="margin-top: -15px;">
+          <div>
+            <br>
+            <ion-label style=" margin-left: 10px !important;">No se encontró empresas para su ubicación</ion-label>
+            <br>
+            <ion-label style="font-weight: bold; margin-left: 10px !important;">{{departamentoSelect}}</ion-label>
+          </div>
+        </ion-list>
+        <ion-list *ngIf="estadoCarga==false" class="contenedor">
+          <p style="margin-left: 20px !important ;">
+            <ion-skeleton-text  animated style="width: 30%"></ion-skeleton-text>
+          </p>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <p style="margin-left: 20px !important ;">
+            <ion-skeleton-text  animated style="width: 30%"></ion-skeleton-text>
+          </p>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <p style="margin-left: 20px !important ;">
+            <ion-skeleton-text  animated style="width: 30%"></ion-skeleton-text>
+          </p>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+          <p style="margin-left: 20px !important ;">
+            <ion-skeleton-text  animated style="width: 30%"></ion-skeleton-text>
+          </p>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-label>
+              <p>
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+
+
+        <div *ngFor="let sub of subCategoria" [hidden]="cargaCompleta">
+          <ion-item-divider style="--background: #FBFBFB; margin-left: -10px !important;">
+            <ion-label><span style="font-weight: 700; color: black; text-transform: capitalize; font-size: 0.95rem;">{{sub | lowercase}}</span></ion-label>
+          </ion-item-divider>
+          <ion-card style="margin-left: 0 !important;
+          margin-right: 0 !important; margin-bottom: 2px !important;" *ngFor="let empresa of filtro(sub)"
+            (click)="onIrEmpresa(empresa)">
+              <ion-row class="ion-activatable ripple-parent">
+                <ion-col class="contenedorImagen" size="3">
+                  <img onerror="this.src='assets/img/loading.gif';" src="{{empresa.ImagenUrl}}">
+                </ion-col>
+                <ion-col size="9">
+                  <ion-row>
+                    <ion-col size="10">
+                      <ion-row style="margin-top: 8px;">
+                        <ion-label style="font-size: 0.9rem; font-weight: bold; color: black; margin-bottom: 8px; text-transform: capitalize;">
+                          {{empresa.RazonSocial | lowercase }}
+                        </ion-label>
+                      </ion-row>
+                      <ion-row>
+                        <ion-icon name="location-sharp"></ion-icon>
+                        <ion-label style="font-weight: bold; font-size: 0.79rem; color:#979DA9; text-transform: capitalize;"> 
+                          {{empresa.Direccion.toLowerCase()}}
+                        </ion-label>
+                      </ion-row>
+                    </ion-col>
+                    <ion-col size="2">
+                      <ion-buttons>
+                        <ion-button style="margin-top: -15px;">
+                          <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+                        </ion-button>
+                      </ion-buttons>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row style="margin-top: -5px;">
+                    <ion-col size="8" style="align-items: center;
+                    display: flex;
+                    justify-content: flex-start;">
+                      <ion-icon color="warning" name="star-sharp"></ion-icon>
+                      <ion-label style="font-weight: bold; font-size: 0.79rem; color:black; text-transform: capitalize; margin-left: 5px !important;">{{empresa.Puntuacion}}</ion-label>
+                      <ion-icon style="margin-left: 10px;" color="dark" name="time-outline"></ion-icon>
+                      <ion-label style="font-weight: bold; font-size: 0.79rem; color:#1D9828; margin-left: 5px !important;"> {{empresa.HorarioInicio.substring(0,5)}} - {{empresa.HorarioFin.substring(0,5)}}</ion-label>
+                    </ion-col>
+                    <ion-col size="4" class="ion-text-end">
+                      <ion-badge *ngIf="verificarHora(empresa.HorarioInicio,empresa.HorarioFin); else templateName" style="font-size: 0.75rem; margin-left: 10px;  width: 58px; --background: #1D9828"  mode='ios'>Abierto</ion-badge>
+                      <ng-template #templateName>
+                          <ion-badge style="font-size: 0.75rem; margin-left: 10px; width: 58px;" color="medium" mode='ios'>Cerrado</ion-badge>
+                      </ng-template>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-ripple-effect></ion-ripple-effect>
+              </ion-row>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

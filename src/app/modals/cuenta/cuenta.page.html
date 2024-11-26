@@ -1,0 +1,145 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar  style="--background: #FBFBFB;">
+    <ion-buttons slot="start">
+      <ion-button (touchend)="closeModal()">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" style="color:black; font-weight: bold; font-family: Gilroy-Regular; text-transform: capitalize;">
+      Mi Perfil
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon style="font-weight: bold; color: black;"  name="person-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #FBFBFB;">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3" class="contenedorFlexCenter">
+        <img width="80vh" src="assets/img/profile.png"/> 
+      </ion-col>
+      <ion-col size="9" class="contenedorFlex">
+        <ion-label style="font-weight: bold; font-size: 0.95rem;">{{cliente.Nombres}}</ion-label>
+        <ion-label style="font-weight: bold; font-size: 0.95rem;">{{cliente.Apellidos}}</ion-label>
+        <ion-label style="font-weight: bold; font-size: 0.8rem; color: #1D9828;">{{cliente.Telefono}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-list class="colorBack">
+      <ion-item class="colorBack">
+        <ion-label style=" font-weight: bold; color: black;">Información de Cuenta</ion-label>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon name="chevron-up-sharp"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-item class="colorBack">
+        <ion-label style=" font-weight: bold; color: black;">Historial</ion-label>
+        <ion-buttons slot="end">
+          <ion-button [disabled]="disabledHistorial" *ngIf="!mostrarHistorial" (click)="onMostrarHistorial()">
+            <ion-icon name="chevron-up-sharp"></ion-icon>
+          </ion-button>
+          <ion-button [disabled]="disabledHistorial" *ngIf="mostrarHistorial" (click)="onCerrarHistorial()">
+            <ion-icon name="chevron-down-sharp"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-card *ngIf="mostrarHistorial">
+        <ion-card-content>
+          <ion-row *ngIf="historialCliente.length==0">
+            <ion-col size="12" class="ion-text-center">
+              <ion-text style="color: #1D9828;">
+                <h1>No ha realizado pedidos</h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let item of historialCliente" style="border-bottom: 1px solid grey;">
+            <ion-col size="8">
+              <ion-text style="font-size: 0.75rem; color: black;">
+                Para: <span style="color: #1D9828;  font-weight: bold;">{{item.Direccion}}</span>
+              </ion-text>
+              <br>
+              <ion-text style="font-size: 0.75rem; color: black;">
+                Fecha y Hora: <span style="color: #1D9828; font-weight: bold;">{{item.FechaReg}}</span> 
+              </ion-text>
+              <br>
+              <ion-text style="font-size: 0.75rem; color: black; ">
+                A: <span style="font-weight: bold;">{{item.RazonSocial}}</span> 
+              </ion-text>
+              <br>
+              <ion-text style="font-size: 0.75rem; color: black; ">
+                Monto: <span style="font-weight: bold;"> S/ {{item.TotalPago}}</span> 
+              </ion-text>
+            </ion-col>
+            <ion-col size="4" class="contenedorFlexCenter">
+              <div [ngSwitch]="item.Estado">
+                <ion-badge style="font-size: 0.7rem !important;" *ngSwitchCase="'C'" color="danger">CANCELADO</ion-badge>
+                <ion-badge style="font-size: 0.7rem !important;" *ngSwitchCase="'F'" color="success">FINALIZADO</ion-badge>
+                <ion-badge style="font-size: 0.7rem !important;" *ngSwitchDefault color="primary">PROCESO</ion-badge>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-item class="colorBack">
+        <ion-label style=" font-weight: bold; color: black;">Mis Direcciones</ion-label>
+        <ion-buttons slot="end">
+            <ion-button [disabled]="disabledDirecciones" *ngIf="!mostrarDirecciones" (click)="onMostrarDirecciones()">
+              <ion-icon name="chevron-up-sharp"></ion-icon>
+            </ion-button>
+          <ion-button [disabled]="disabledDirecciones" *ngIf="mostrarDirecciones" (click)="onCerrarDirecciones()">
+              <ion-icon name="chevron-down-sharp"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-card *ngIf="mostrarDirecciones">
+        <ion-card-content>
+          <ion-row *ngIf="direccionesCliente.length==0">
+            <ion-col size="12" class="ion-text-center">
+              <ion-text style="color: #1D9828;">
+                <h1>No tiene direcciones agregadas</h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let item of direccionesCliente" style="border-bottom: 1px solid grey;">
+            <ion-col size="10">
+              <ion-text style="font-size: 0.75rem; color: #1D9828; font-weight: bold;">
+                {{item.Direccion}}
+              </ion-text>
+              <br>
+              <ion-text style="font-size: 0.7rem; color: black;">
+                {{item.Referencia}}
+              </ion-text>
+            </ion-col>
+            <ion-col size="2" class="contenedorFlexCenter">
+              <ion-buttons>
+                <ion-button (click)="onEliminarDireccion(item.IdDireccionUsuario,item.Direccion)">
+                  <ion-icon color="danger" name="trash"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-item class="colorBack">
+        <ion-label style=" font-weight: bold; color: black;">Mi Ciudad    <span style="text-transform: capitalize; color: #1D9828;">{{departamentoSelect==null?'Seleccione su ciudad.': (departamentoSelect | lowercase)}}</span></ion-label>
+      </ion-item>
+      <ion-item class="colorBack">
+        <ion-label style=" font-weight: bold; color: black;">Notificaciones</ion-label>
+        <ion-toggle slot="end" name="banana" color="warning" checked></ion-toggle>
+      </ion-item>
+    </ion-list>
+    <ion-row>
+      <ion-col size="12" class="ion-text-start">
+        <ion-button (click)="onCerrarSesion()"  expand="block" style="text-transform: none; font-size: 1.3rem; font-weight: bold; --background: #1D9828; color: white;">
+          Cerrar Sesión
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,71 @@
+ion-back-button{
+    --color:black;
+}
+
+.boton{
+   
+    --background:#F0C911;
+    width: 77vw;
+    font-weight: bold;
+}
+
+ion-item{
+   
+  --highlight-background: transparent;
+}
+
+ion-input {
+    color: black;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.upper{
+    text-transform: uppercase !important;
+}
+
+a{
+   color: #F0C911; 
+   font-weight: bold;
+}
+
+
+
+ ion-slides {
+   
+    --bullet-background-active:  #F0C911;
+}
+
+//Para parpadear
+.parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    --color:black !important;
+    color:black !important;
+    border-color:black !important;
+    ion-icon{
+      --color:black !important;
+      color:black !important;
+    }
+  }
+  @-moz-keyframes parpadeo{  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+  @-webkit-keyframes parpadeo {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+     100% { opacity: 1.0; }
+  }
+  @keyframes parpadeo {  
+    0% { opacity: 1.0; }
+     50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }

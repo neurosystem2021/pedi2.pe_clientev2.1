@@ -1,0 +1,19 @@
+#mapid{
+    display: block;
+    margin: 0 auto; // Make the photo center align
+    width: 100%;    // Adjust the width according to height
+    height: 92vh; 
+}
+.modalHeaderBackground{
+    --background: #FBFBFB;
+    background: #FBFBFB;
+}
+.modalContentBackground{
+    --background: #F4F4F6;  /* fallback for old browsers */
+}
+.btnCurrentCoords{
+    --background: #1D9828;
+}
+.btnAccept{
+    --background: #1D9828;
+}

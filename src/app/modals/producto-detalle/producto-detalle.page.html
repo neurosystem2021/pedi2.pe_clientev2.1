@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar style="--background: #D9E6E6;">
+    <ion-buttons slot="start">
+      <ion-button  (touchend)="closeModal(null)">
+        <ion-icon style="font-weight: bold; color: black;" slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content  style="z-index: 100 !important;">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6" class="contenedorFlex">
+        <img width="150vh" style="border-radius: 10px;" onerror="this.src='assets/img/producto.png';" src="{{producto.Imagen!= null && producto.Imagen!=''?(empresa.TieneSistema==1?empresa.FacturaUrl+'/resources/images/productos/'+producto.Imagen:producto.Imagen):'assets/img/producto.png'}}">
+      </ion-col>
+      <ion-col size="6" class="contenedorCentroGrid">
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <ion-label style="font-size: 1.2rem; color: black; font-weight: bold;">{{producto.Producto}}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <ion-label style="font-size: 1.35rem; color: #196d20; font-weight: bold;">
+              {{producto.PrecioContado | currency:'PEN':'S/ ':'1.2-2'}}
+            </ion-label>
+            <br *ngIf="producto.PorcentajeLiquidacion > 0">
+            <ion-label *ngIf="producto.PorcentajeLiquidacion > 0" style="font-size: 0.95rem; color: #25c432; font-weight: bold; text-decoration:line-through;">
+              {{producto.PrecioAnterior | currency:'PEN':'S/ ':'1.2-2'}}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" class="ion-text-center">
+            <ion-button  class="no-ripple" (touchend)="onReducirCantidad()" color="light" size="small" style="--border-radius:5px;">
+              <ion-icon slot="icon-only" name="remove"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="4" class="ion-text-center">
+            <ion-label style="font-size: 1.5rem; color: black; font-weight: bold;">{{producto.Cantidad}}</ion-label>
+          </ion-col>
+          <ion-col size="4" class="ion-text-center">
+            <ion-button class="no-ripple" (touchend)="onAdicionarCantidad()" size="small" style="--background:#1D9828; --border-radius:5px;">
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-card style="background: #e9f3f3">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="6" class="contenedorIzq">
+            <ion-label style="font-size: 1.2rem; color: black; font-weight: bold;">Detalles</ion-label>
+          </ion-col>
+          <ion-col size="6" class="contenedorDer">
+            <ion-label style="font-size: 0.8rem; color: #FFB414; font-weight: bold;">{{empresa.RazonSocial}}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-text [ngClass]="producto.VerMas == 1 ? '' : 'descripcion'">
+             {{producto.ProductoDesc?producto.ProductoDesc:'Sin descripcion'}}
+            </ion-text>
+            <div style="margin-top: 5px;" *ngIf="(''+producto.ProductoDesc).length > 250">
+              <ion-label *ngIf="producto.VerMas == 0; else loggedOut"  (click)="accionVerMas(1)" style="font-size: 0.8rem; color: #0d6efd; font-weight: bold; text-decoration: underline;">Ver más</ion-label>
+              <ng-template #loggedOut>
+                <ion-label (click)="accionVerMas(0)" style="font-size: 0.8rem; color: #0d6efd; font-weight: bold; text-decoration: underline;">Ver menos</ion-label>    
+              </ng-template>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="contenedorIzq">
+            <ion-icon color="warning" style="font-size: 1.2;" name="star"></ion-icon>
+            <ion-label style="margin-left: 5px; font-size: 1.2; color: black; font-weight: bold;"> 4.5</ion-label>
+            <!--<ion-icon  style="margin-left: 30px; font-size: 1.2; color: #1D9828; font-weight: bold;" name="cafe-outline"></ion-icon>
+            <ion-label style="margin-left: 5px; font-size: 1.2; color: black; font-weight: bold;"> 30 mins</ion-label>-->
+          </ion-col>
+          <ion-col size="6">
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="contenedorIzq">
+            <ion-label style="font-size: 1.2rem; color: black; font-weight: bold;">Indicaciones</ion-label>
+          </ion-col>
+          <ion-col size="6" class="contenedorDer">
+            <ion-label  (click)="mostrarOpciones()" style="font-size: 0.8rem; color: #1D9828; font-weight: bold;">Agregar</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-textarea style="text-transform: uppercase;" [(ngModel)]="producto.Indicacion" rows="3" class="textAreaIndicaciones"  placeholder="Por favor indiquenos como desea el producto. Ejemplo: Sin Pimienta"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="contenedorIzq">
+            <ion-label style="font-size: 1.2rem; color: black; font-weight: bold;">Costo Total</ion-label>
+          </ion-col>
+          <ion-col size="6" class="contenedorDer">
+            <ion-label style="font-size: 1.2rem; color: #196d20; font-weight: bold;">{{(producto.PrecioContado * producto.Cantidad) | currency:'PEN':'S/ ':'1.2-2'}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-row>
+      <ion-col size="2">
+       
+      </ion-col>
+
+      <ion-col size="8">
+        <ion-button (touchend)="onAgregarCarrito()" expand="block" style="font-weight: bold; --background: #1D9828;">
+          Agregar al Carrito  <ion-icon style="margin-left: 5px;" name="cart-sharp"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

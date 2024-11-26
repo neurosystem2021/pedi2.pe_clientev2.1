@@ -1,0 +1,34 @@
+.headerBackground{
+    --background: #D9E6E6;
+    background: #D9E6E6;
+}
+
+.modalContentBackground{
+    --background: #D9E6E6;
+    background: #D9E6E6;
+}
+
+.icono {
+    font-size: 40px;
+}
+.contenidoRButton{
+    margin-left: 50px;
+}
+.subcontenido{
+    margin-left: 50px;
+}
+.inputMonto{
+    width: 80%;
+}
+
+.item-has-focus{
+    --highlight-background: #1D9828;
+ }
+
+.radioClass{
+    --color-checked: #1D9828;
+}
+
+* {
+    font-family: Gilroy-Regular;
+  }

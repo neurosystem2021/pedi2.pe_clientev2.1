@@ -1,0 +1,406 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #d9e6e6">
+    <ion-buttons slot="start">
+      <ion-back-button
+        style="font-weight: bold; color: black"
+        (touchend)="onIrCategoria()"
+        default-href=""
+      >
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title
+      class="ion-text-center"
+      style="
+        color: black;
+        font-weight: bold;
+        font-family: Gilroy-Regular;
+        text-transform: capitalize;
+      "
+    >
+      {{empresa.RazonSocial | lowercase }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="abrirCarrito()"
+        [ngClass]="{'moverFab': carritoService.obtenerPedidos().length!=0 }"
+      >
+        <ion-badge
+          *ngIf="carritoService.obtenerPedidos().length!=0"
+          color="success"
+        >
+          {{carritoService.obtenerPedidos().length}}
+        </ion-badge>
+        <ion-icon
+          name="cart"
+          color="danger"
+          style="font-size: 1.5rem"
+          [ngClass]="{'parpadea2': efectoAgregar }"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="contenidoProductos" scrollEvents="true">
+  <ion-row
+    class="contenedorColor"
+    style="align-items: center; display: flex; justify-content: center"
+  >
+    <img
+      class="imageEmpresa"
+      onerror="this.src='assets/img/loading.gif';"
+      src="{{empresa.ImagenUrl}}"
+    />
+  </ion-row>
+  <ion-row
+    class="contenedorColor"
+    style="align-items: center; display: flex; justify-content: center"
+  >
+    <ion-card
+      class="contenidoProductos"
+      style="z-index: 2 !important; width: 80vw"
+    >
+      <ion-card-content style="padding: 8px !important">
+        <ion-row style="margin-top: -7px" class="ion-text-center">
+          <ion-col
+            size="12"
+            style="
+              display: flex;
+              justify-content: center;
+              align-content: center;
+            "
+          >
+            <!--<ion-icon style="font-weight: bold; font-size: 0.9rem; color: #1D9828;" name="location-outline"></ion-icon>-->
+            <ion-buttons>
+              <ion-button class="parpadeaAcciones" (click)="abrirMapa()">
+                <ion-icon
+                  name="location-sharp"
+                  style="font-size: 1.7rem; color: #ffbb0e"
+                ></ion-icon>
+              </ion-button>
+              <ion-label
+                style="
+                  font-weight: bold;
+                  font-size: 0.9rem;
+                  color: black;
+                  margin-left: -10px !important;
+                  text-align: center;
+                "
+                >{{empresa.DistritoUbicacion}}</ion-label
+              >
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-top: -7px" class="ion-text-center">
+          <ion-col size="12">
+            <ion-icon
+              style="font-weight: bold; font-size: 0.9rem; color: #1d9828"
+              name="time-outline"
+            ></ion-icon>
+            <ion-label
+              style="
+                font-weight: bold;
+                font-size: 0.9rem;
+                margin-left: 5px !important;
+                color: black;
+              "
+              >Atención: De {{empresa.HorarioInicio | slice:0:5}} a
+              {{empresa.HorarioFin | slice:0:5}}</ion-label
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-top: -7px" class="ion-text-center">
+          <ion-col size="12">
+            <ion-icon
+              style="font-weight: bold; font-size: 0.9rem; color: #1d9828"
+              name="call-outline"
+            ></ion-icon>
+            <ion-label
+              style="
+                font-weight: bold;
+                font-size: 0.9rem;
+                margin-left: 5px !important;
+                color: black;
+              "
+              >Teléfono: {{empresa.Telefono }}</ion-label
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row style="margin-top: -7px" class="ion-text-center">
+          <ion-col size="12">
+            <ion-icon
+              style="font-weight: bold; font-size: 0.9rem; color: #1d9828"
+              name="bicycle-sharp"
+            ></ion-icon>
+            <ion-label
+              style="
+                font-weight: bold;
+                font-size: 0.9rem;
+                color: black;
+                margin-left: 5px !important;
+              "
+              >Delivery: {{empresa.PrecioKm>0?'Sujeto a
+              distancia':(empresa.PrecioDelivery > 0?'S/ '+
+              empresa.PrecioDelivery:'Gratis') }}</ion-label
+            >
+          </ion-col>
+        </ion-row>
+        <ion-row
+          style="margin-top: -7px; margin-bottom: -15px"
+          class="ion-text-center"
+        >
+          <ion-col size="12">
+            <ion-badge
+              *ngIf="abiertoEmpresa; else templateName"
+              style="
+                font-size: 0.75rem;
+                margin-left: 10px;
+                width: 58px;
+                --background: #1d9828;
+              "
+              mode="ios"
+              >Abierto</ion-badge
+            >
+            <ng-template #templateName>
+              <ion-badge
+                style="font-size: 0.75rem; margin-left: 10px; width: 58px"
+                color="medium"
+                mode="ios"
+                >Cerrado</ion-badge
+              >
+            </ng-template>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-grid
+    style="
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 25;
+      width: 100%;
+    "
+  >
+    <ion-row
+      class="contenidoProductos"
+      style="
+        margin-top: -7px;
+        margin-bottom: -5px !important;
+        z-index: 1 !important;
+      "
+    >
+      <ion-col size="12" style="padding-top: 0;">
+        <ion-segment
+          id="scrollHorizontal"
+          scrollable
+          value="{{IdProductoCategoria}}"
+          style="border-bottom: 2px solid #e8e8e8; color: black"
+        >
+          <ion-segment-button
+            class="parpadeaAcciones"
+            (click)="cargarBusqueda(0,'')"
+            value="0"
+            *ngIf="categoriaMenu.length>0"
+          >
+            <ion-icon
+              style="
+                font-size: 1.4rem;
+                padding: 0;
+                font-weight: bold;
+                color: #ffbb0e;
+              "
+              name="search"
+            ></ion-icon>
+          </ion-segment-button>
+
+          <ion-segment-button
+            style="color: black"
+            (click)="cargarProducto(categoria.IdProductoCategoria,categoria.ProductoCategoria,categoria.EsOferta)"
+            *ngFor="let categoria of categoriaMenu"
+            value="{{categoria.IdProductoCategoria}}"
+            [ngClass]="{'esoferta': categoria.EsOferta == 1, 'parpadeaOfertaOpc': categoria.EsOferta == 1 }"
+          >
+            <ion-label class="labelCategoria"
+              >{{categoria.ProductoCategoria}}</ion-label
+            >
+          </ion-segment-button>
+        </ion-segment>
+        <ion-icon
+          id="btnRight"
+          class="vaiven"
+          style="
+            font-size: 1.5rem;
+            color: red;
+            position: absolute;
+            right: 0;
+            margin-top: -55px;
+          "
+          name="arrow-forward"
+        ></ion-icon>
+        <ion-icon
+          id="btnLeft"
+          class="vaiven"
+          style="
+            display: none;
+            font-size: 1.5rem;
+            color: red;
+            position: absolute;
+            left: 0;
+            margin-top: -55px;
+          "
+          name="arrow-back"
+        ></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row class="colorBlancoFondo" *ngIf="IdProductoCategoria==0">
+      <ion-col size="2" class="contenedorFlex">
+        <ion-icon class="icon-mic" *ngIf="!recording" name="mic-outline" (click)="startRecognition()"></ion-icon>
+        <ion-icon class="icon-mic" *ngIf="recording" name="mic-off-outline" (click)="stopRecognition()"></ion-icon>
+      </ion-col>
+      <ion-col size="10">
+        <ion-searchbar
+          [(ngModel)]="busqueda"
+          class="colorBlancoFondo"
+          [ngClass]="{'parpadea': alertaBusqueda }"
+          placeholder="Buscar producto"
+          [debounce]="500"
+          (ionInput)="buscarProducto($event)"
+          (ionClear)="onLimpiarBusqueda($event)"
+        ></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="height: 100vh" id="scroll">
+    <ion-row *ngIf="!cargando" style="margin-top: 25vh">
+      <ion-col size="12" class="ion-text-center">
+        <img src="assets/img/loading.gif" width="50px" />
+      </ion-col>
+    </ion-row>
+    <ion-row
+      *ngIf="cargando == true && categoriaMenu.length==0"
+      style="margin-top: 15vh"
+    >
+      <ion-col class="ion-text-center">
+        <br />
+        <ion-label style="font-weight: bold; color: black; font-size: 1.5rem">
+          No tiene productos registrados
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row
+      *ngIf="IdProductoCategoria == 0 && productos.length==0 && cargando == true && busqueda.trim()!=''"
+      style="margin-top: 15vh"
+    >
+      <ion-col class="ion-text-center">
+        <br />
+        <ion-label style="color: #1d9828; font-size: 1.5rem">
+          No se encontró resultados para:
+          <span style="font-weight: bold">{{busqueda}}</span>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row
+      *ngIf="IdProductoCategoria == 0 && productos.length==0 && cargando == true && busqueda.trim()==''"
+      style="margin-top: 15vh"
+    >
+      <ion-col class="ion-text-center">
+        <br />
+        <ion-label style="color: #1d9828; font-size: 1.5rem">
+          Ingrese el nombre a buscar
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <div class="card"
+          *ngFor="let producto of productos"
+          (click)="onVerProducto(producto)"
+        >
+          <ion-row>
+            <ion-col size="9">
+              <ion-row style="margin-top: 7px">
+                <ion-col size="12">
+                  <ion-label
+                    class="unaLinea"
+                    style="font-size: 0.9rem; color: black; font-weight: 700"
+                    >{{ producto.Producto }}</ion-label
+                  >
+                  <ion-label class="descrip" style="margin-top: 5px"
+                    >{{ (producto.ProductoDesc == null || producto.ProductoDesc
+                    == '')?'Sin Descripción':producto.ProductoDesc }}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: -5px">
+                <ion-col size="12">
+                  <ion-label
+                    style="font-size: 1rem; color: #196d20; font-weight: bold"
+                    >{{ producto.PrecioContado | currency:'PEN':'S/ ':'1.2-2'
+                    }}</ion-label
+                  >
+                  <ion-icon
+                    style="margin-left: 25px; font-size: 1.1rem"
+                    color="warning"
+                    name="star-sharp"
+                  ></ion-icon>
+                  <ion-label
+                    style="
+                      font-weight: bold;
+                      font-size: 1rem;
+                      color: black;
+                      text-transform: capitalize;
+                      margin-left: 5px !important;
+                    "
+                    >4.5</ion-label
+                  >
+                  <ion-label
+                    class="parpadeaOferta"
+                    *ngIf="producto.IdOfertaCategoria!=null"
+                    style="
+                      font-weight: bold;
+                      font-size: 1rem;
+                      color: red;
+                      margin-left: 15px !important;
+                    "
+                    >OFERTA</ion-label
+                  >
+                  <ion-label
+                    *ngIf="verificarExistencia(producto.IdProducto)"
+                    style="
+                      font-weight: bold;
+                      color: red;
+                      margin-left: 5px;
+                      font-size: 0.8rem;
+                    "
+                  >
+                    <br />
+                    ¡Ya está en el carrito!
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="3" class="contenedorFlex">
+              <img
+                class="imagen"
+                [ngClass]="{'send': agregado == producto.IdProducto}"
+                onerror="this.src='assets/img/producto.png';"
+                src="{{producto.Imagen!= null && producto.Imagen!=''?(empresa.TieneSistema==1?empresa.FacturaUrl+'/resources/images/productos/'+producto.Imagen:producto.Imagen):'assets/img/producto.png'}}"
+              />
+              <ion-text
+                *ngIf="producto.PorcentajeLiquidacion>0"
+                class="bg-img-title"
+                >-{{ producto.PorcentajeLiquidacion }} %
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

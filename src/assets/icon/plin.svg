@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="595.27557"
+   height="419.52759"
+   id="svg28"
+   viewBox="0 0 595.27557 419.52759"
+   sodipodi:docname="plin-seeklogo.com.cdr">
+  <metadata
+     id="metadata34">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs32" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview30" />
+  <g
+     id="Layer1000">
+    <defs
+       id="defs12">
+      <linearGradient
+         id="grad1">
+        <stop
+           offset="0.0000%"
+           stop-color="#0581f6"
+           stop-opacity="1.0000"
+           id="stop2" />
+        <stop
+           offset="22.0000%"
+           stop-color="#0ba1e6"
+           stop-opacity="1.0000"
+           id="stop4" />
+        <stop
+           offset="51.0000%"
+           stop-color="#13ccd1"
+           stop-opacity="1.0000"
+           id="stop6" />
+        <stop
+           offset="100.0000%"
+           stop-color="#16dec8"
+           stop-opacity="1.0000"
+           id="stop8" />
+      </linearGradient>
+      <linearGradient
+         xlink:href="#grad1"
+         id="grad2"
+         x1="0"
+         y1="0"
+         x2="0"
+         y2="1"
+         gradientTransform="rotate(-134,0.5,0.5)"
+         gradientUnits="objectBoundingBox" />
+    </defs>
+    <path
+       d="m 297.4357,32.2744 c 98.3043,0 177.9955,79.5703 177.9955,177.7257 0,98.155 -79.6912,177.7252 -177.9955,177.7252 -21.5035,0 -40.5797,-3.7974 -59.7276,-10.5806 -19.4361,-6.885 -36.9117,-5.2053 -51.6958,-1.7311 -7.3675,1.7316 -13.4403,4.5409 -20.0051,5.7029 -5.6825,1.0055 -11.2309,0.5654 -16.5508,-1.3753 -5.1319,-1.8725 -10.0531,-5.1418 -14.6752,-9.8555 -17.3917,-17.7339 -4.9909,-37.1768 -1.6687,-57.4061 2.2057,-13.4345 1.4199,-28.9375 -3.9137,-44.3126 -6.3212,-18.2232 -9.7587,-37.7945 -9.7587,-58.1669 0,-98.1554 79.6913,-177.7257 177.9956,-177.7257 z"
+       style="fill:url(#grad2)"
+       id="path14" />
+    <g
+       id="Layer1001">
+      <path
+         d="m 175.4929,179.1812 v 97.7673 c 0,0 6.6319,19.8961 21.6072,5.1345 l 0.6419,-25.8862 c 0,0 2.3529,-6.4176 9.4128,-5.7757 0,0 15.6183,4.7048 27.5978,0.2132 26.1838,-9.8179 29.3357,-46.8542 15.2458,-68.4043 -8.1963,-12.5365 -24.7671,-17.8046 -44.769,-9.8949 0,0 -5.5625,2.1392 -14.3336,-1.2836 -8.771,-3.4228 -14.7611,2.7815 -15.4029,7.0599 z m 40.6473,3.8504 c 10.8693,0 19.6818,12.7387 19.6818,28.4534 0,15.7141 -8.8125,28.4528 -19.6818,28.4528 -10.8699,0 -19.6819,-12.7387 -19.6819,-28.4528 0,-15.7147 8.812,-28.4534 19.6819,-28.4534 z"
+         style="fill:#ffffff;fill-rule:evenodd"
+         id="path16" />
+      <path
+         d="m 271.8691,142.6801 v 107.901 q 0,1.8094 1.8094,1.8094 h 18.6843 q 1.8093,0 1.8093,-1.8094 v -107.901 q 0,-1.8094 -1.8093,-1.8094 h -18.6843 q -1.8094,0 -1.8094,1.8094 z"
+         style="fill:#ffffff;fill-rule:evenodd"
+         id="path18" />
+      <path
+         d="m 311.7902,171.5372 h 18.6848 c 0.9955,0 1.8091,0.8141 1.8091,1.8091 v 77.2351 c 0,0.9949 -0.8142,1.8091 -1.8091,1.8091 h -18.6848 c -0.9949,0 -1.8091,-0.8137 -1.8091,-1.8091 v -77.2351 c 0,-0.9955 0.8137,-1.8091 1.8091,-1.8091 z"
+         style="fill:#ffffff;fill-rule:evenodd"
+         id="path20" />
+      <path
+         d="m 320.9105,142.8202 a 11.2772,10.9288 0 0 1 11.2772,10.9289 11.2772,10.9288 0 1 1 -11.2772,-10.9289 z"
+         style="fill:#fa78c5;fill-rule:evenodd"
+         id="path22" />
+      <path
+         d="m 370.7712,195.0997 v 49.5943 c 0,4.3889 -3.5905,7.9794 -7.9794,7.9794 h -5.824 c -4.3889,0 -7.9793,-3.5905 -7.9793,-7.9794 v -44.3571 c -0.7414,-13.2381 -4.0731,-33.436 17.498,-27.8855 12.8692,2.8475 12.7859,-0.3385 22.7783,-2.397 6.2216,-1.2815 17.936,-2.1874 25.1683,6.6523 5.681,6.9431 4.9097,10.4848 4.9097,18.393 v 49.5943 c 0,4.3889 -3.5904,7.9794 -7.9794,7.9794 h -5.8239 c -4.389,0 -7.9794,-3.5905 -7.9794,-7.9794 v -49.5943 c 0,-7.6446 -6.3437,-13.2721 -14.2576,-12.9703 -7.2433,0.2761 -12.5313,7.2207 -12.5313,12.9703 z"
+         style="fill:#ffffff;fill-rule:evenodd"
+         id="path24" />
+    </g>
+  </g>
+</svg>
