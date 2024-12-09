@@ -127,7 +127,6 @@ export class RegistroPage implements OnInit, AfterViewInit {
                 /*consulta api*/
                 try {
                   let respuestaExiste = await this.dataService.postExisteCliente(this.celular);
-                  debugger
                   if(respuestaExiste.data.success==true){
                     this.mostrarMensajeBottom(respuestaExiste.data.msg,3000,"danger")
                   }else if(respuestaExiste.data.success==false){

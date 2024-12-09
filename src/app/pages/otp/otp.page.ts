@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data.service';
 import { NavegacionService } from 'src/app/services/navegacion.service';
 import { Storage } from '@ionic/storage';
 import { SmsRetriever } from '@awesome-cordova-plugins/sms-retriever/ngx';
+
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.page.html',
@@ -28,13 +29,13 @@ export class OtpPage implements OnInit {
   habilitar:boolean=false;
   hashSMS:string='dgzH6F7xDpL';
   constructor(
-    private navegacionService:NavegacionService,
-    private navController: NavController,
-    private alertController:AlertController,
-    private dataService:DataService,
-    private toastController:ToastController,
-    private storage: Storage,
-    private smsRetriever: SmsRetriever) { }
+    readonly navegacionService:NavegacionService,
+    readonly navController: NavController,
+    readonly alertController:AlertController,
+    readonly dataService:DataService,
+    readonly toastController:ToastController,
+    readonly storage: Storage,
+    readonly smsRetriever: SmsRetriever) { }
 
   ngOnInit() {
   }

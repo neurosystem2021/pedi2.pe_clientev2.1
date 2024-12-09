@@ -120,8 +120,15 @@ export class MenuPage implements OnInit {
       let respuesta = await this.dataService.getCategorias();
       if(respuesta.data.success==true){
         this.categoriaMenu = respuesta.data.data;
+        this.categoriaMenu.map((item: any)=> {
+          return {
+            ...item,
+            active: false
+          }
+        })
         this.idCategoria = this.categoriaMenu[0].IdEmpresaCategoria;
         this.nombreCategoria = this.categoriaMenu[0].EmpresaCategoria;
+        this.categoriaMenu[0].active = true;
         let departamento = await this.storage.get("departamento");
         if(departamento != null){
           this.cargarEmpresas('', departamento.DepartamentoUbicacion);
@@ -320,8 +327,14 @@ export class MenuPage implements OnInit {
     //fin de modal
   }
 
-  async onIrCategoria(idCategoria:number, nombreCategoria:string){
+  async onIrCategoria(idCategoria:number, nombreCategoria:string, index: number){
     let departamento = await this.storage.get("departamento");
+    this.categoriaMenu = this.categoriaMenu.map((item: any, i: number) => {
+      return {
+        ...item,
+        active: i === index 
+      };
+    });
     if(departamento == null){
       const toast = await this.toastController.create({
         message: ' Primero seleccione su ciudad  ',
@@ -436,6 +449,13 @@ cargarEmpresas(busqueda:string,departamento:string){
         this.subCategoria = this.empresas
       .map((a: any) => ({ name: a.SubCategoria, ImagenUrlSubCate: a.ImagenUrlSubCate })) // Mapea con un objeto que contenga name
       .filter((v: any, i: any, a: any) => a.findIndex((t: any) => t.name === v.name) === i);
+      this.subCategoria.map((item:any) => {
+        return {
+          ...item,
+          active: false
+        }
+      })
+      this.subCategoria[0].active = true;
         this.showListEmpresas = this.filtro(this.subCategoria[0].name)
         this.ShowListEmpresaAll = this.empresas;
         this.existeEmpresas = false;
@@ -463,8 +483,14 @@ filtro(SubCategoria: string) {
   return this.empresas.filter((empresa: any) => empresa.SubCategoria == SubCategoria);
 }
 
-changeSubCategory(subCategory: any){
+changeSubCategory(subCategory: any, index: any){
   this.showListEmpresas = this.filtro(subCategory);
+  this.subCategoria = this.subCategoria.map((item: any, i: number) => {
+    return {
+      ...item,
+      active: i === index 
+    };
+  });
 }
 
 

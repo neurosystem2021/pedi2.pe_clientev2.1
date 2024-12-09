@@ -48,6 +48,8 @@
     "cordova-plugin-fcm-with-dependecy-updated": "^7.8.0",
     "cordova-plugin-nativegeocoder": "^3.5.1",
     "cordova-plugin-request-location-accuracy": "^2.3.0",
+    "cordova-plugin-vibration": "^3.1.1",
+    "cordova-plugin-sms-retriever-manager": "^1.0.5",
     "i": "^0.3.7",
     "ionicons": "^7.0.0",
     "moment": "^2.30.1",

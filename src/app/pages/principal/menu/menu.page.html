@@ -128,10 +128,11 @@
     </ion-row>
 
     <div class="container_categories">
-      <div class="category" *ngFor="let categoria of categoriaMenu">
+      <div class="category" [ngClass]="{'activeCategory': categoria.active}"
+       *ngFor="let categoria of categoriaMenu; index as i">
         <img
           class="br-12"
-          (click)="onIrCategoria(categoria.IdEmpresaCategoria, categoria.EmpresaCategoria)"
+          (click)="onIrCategoria(categoria.IdEmpresaCategoria, categoria.EmpresaCategoria, i)"
           [src]="categoria.ImagenUrl"
           alt=""
           width="70"
@@ -154,10 +155,10 @@
     </ion-row>
 
     <div class="container_categories">
-      <div class="category" *ngFor="let category of subCategoria">
+      <div class="category"  [ngClass]="{'activeCategory': category.active}"  *ngFor="let category of subCategoria; index as i">
         <img
           class="br-circle"
-          (click)="changeSubCategory(category.name)"
+          (click)="changeSubCategory(category.name, i)"
           [src]="category.ImagenUrlSubCate"
           alt=""
           width="50"
