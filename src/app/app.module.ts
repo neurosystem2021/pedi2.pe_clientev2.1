@@ -18,6 +18,7 @@ import { SmsRetriever } from '@awesome-cordova-plugins/sms-retriever/ngx';
 import { NativeGeocoder } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
+import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 
 
 const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
@@ -39,7 +40,8 @@ const config: SocketIoConfig = { url: environment.wsUrl, options: {} };
     SmsRetriever,
     NativeGeocoder,
     AndroidPermissions,
-    LocationAccuracy
+    LocationAccuracy,
+    CallNumber
   ],
   bootstrap: [AppComponent],
 })

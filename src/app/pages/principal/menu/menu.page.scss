@@ -158,10 +158,10 @@ a {
   padding: 10px;
   padding-top: 0;
   .category {
-    min-width: 90px;
+    min-width: 70px;
     margin-right: 1px;
-    padding: 1px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 12px;
     text-align: center;
     flex-shrink: 0;
     .name{
@@ -189,6 +189,11 @@ a {
 }
 
 .activeCategory{
-  background-color: #FECD2A;
+  background-color: #FECD2A ;
+  border: 3px solid rgb(240, 240, 240);
+}
+
+.activeSubCategory{
+  background-color: #90C6CF ;
   border: 3px solid rgb(240, 240, 240);
 }

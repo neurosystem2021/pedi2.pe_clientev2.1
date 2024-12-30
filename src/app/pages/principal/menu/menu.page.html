@@ -135,8 +135,8 @@
           (click)="onIrCategoria(categoria.IdEmpresaCategoria, categoria.EmpresaCategoria, i)"
           [src]="categoria.ImagenUrl"
           alt=""
-          width="70"
-          height="70"
+          width="65"
+          height="65"
         />
         <div class="name">{{ categoria.EmpresaCategoria | titlecase }}</div>
       </div>
@@ -155,14 +155,14 @@
     </ion-row>
 
     <div class="container_categories">
-      <div class="category"  [ngClass]="{'activeCategory': category.active}"  *ngFor="let category of subCategoria; index as i">
+      <div class="category"  [ngClass]="{'activeSubCategory': category.active}"  *ngFor="let category of subCategoria; index as i">
         <img
           class="br-circle"
           (click)="changeSubCategory(category.name, i)"
           [src]="category.ImagenUrlSubCate"
           alt=""
-          width="50"
-          height="50"
+          width="45"
+          height="40"
         />
         <div class="name">{{ category.name | titlecase }}</div>
       </div>

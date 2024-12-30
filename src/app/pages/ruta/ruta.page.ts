@@ -79,7 +79,10 @@ export class RutaPage implements OnInit {
     { name: 'preparado', audio: new Audio('assets/audio/ruta/preparado.mp3') },
     { name: 'camino', audio: new Audio('assets/audio/ruta/camino.mp3') },
     { name: 'llegado', audio: new Audio('assets/audio/ruta/llegado.mp3') },
-    { name: 'completado', audio: new Audio('assets/audio/ruta/completado.mp3'),},
+    {
+      name: 'completado',
+      audio: new Audio('assets/audio/ruta/completado.mp3'),
+    },
     { name: 'cancelado', audio: new Audio('assets/audio/ruta/cancelado.mp3') },
     { name: 'aceptado', audio: new Audio('assets/audio/ruta/aceptado.mp3') },
     { name: 'comprando', audio: new Audio('assets/audio/ruta/comprando.mp3') },
@@ -104,34 +107,40 @@ export class RutaPage implements OnInit {
 
     this.mensajesSubscription = this.accionesService
       .mensajeEscuchar()
-      .subscribe(async (payload: any) => {
-        try {
-          let resp = await this.dataService.getMensajes(this.idPedido);
-          this.mensajes =
-            resp.data.chat != null && resp.data.chat != ''
-              ? JSON.parse(resp.data.chat)
-              : [];
-          console.log('mensaje recibido');
-          this.mensajeNuevo =
-            ('' + payload.msg).length > 25
-              ? ('' + payload.msg).substring(0, 25).concat('...')
-              : '' + payload.msg;
-          this.mensajesSinLeer++;
-        } catch (error) {}
+      .subscribe({
+        next: async (payload: any) => {
+          console.log(payload);
+          try {
+            let resp = await this.dataService.getMensajes(this.idPedido);
+            this.mensajes =
+              resp.data.chat != null && resp.data.chat != ''
+                ? JSON.parse(resp.data.chat)
+                : [];
+            console.log('mensaje recibido');
+            this.mensajeNuevo =
+              ('' + payload.msg).length > 25
+                ? ('' + payload.msg).substring(0, 25).concat('...')
+                : '' + payload.msg;
+            this.mensajesSinLeer++;
+          } catch (error) {}
 
-        /*
-         Schedule a single notification
-       this.localNotifications.schedule({
-         id: 1,
-        text: 'Motorizado envio un mensaje:'+msg['cuerpo'],
-          sound: 'file://assets/sound/just-saying.mp3',
-          vibrate:true,
-          lockscreen:true,
-          foreground:true,
-          priority:2,
-          data: { secret: '744774' }
-        });
-      */
+          /*
+            Schedule a single notification
+          this.localNotifications.schedule({
+            id: 1,
+          text: 'Motorizado envio un mensaje:'+msg['cuerpo'],
+            sound: 'file://assets/sound/just-saying.mp3',
+            vibrate:true,
+            lockscreen:true,
+            foreground:true,
+            priority:2,
+            data: { secret: '744774' }
+          });
+        */
+        },
+        error:(err: any)=>{
+          console.log(err);
+        }
       });
 
     this.escucharMotorizadoSubscription = this.accionesService
