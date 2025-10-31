@@ -217,8 +217,8 @@ export class MenuPage implements OnInit, OnDestroy {
         } else {
           this.herramientasService.setNotificaciones(0);
         }
-/* 
-       this.callNotifications =  setInterval(async () => {
+
+ /*       this.callNotifications =  setInterval(async () => {
           let respuestaNotificacionesNum =
             await this.dataService.getNumeroNotificaciones(val.IdCliente);
           if (respuestaNotificacionesNum.data.success == true) {

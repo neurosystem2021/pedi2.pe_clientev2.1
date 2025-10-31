@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   ModalController,
   NavController,
@@ -29,7 +29,7 @@ declare let L: any;
   templateUrl: './ruta.page.html',
   styleUrls: ['./ruta.page.scss'],
 })
-export class RutaPage implements OnInit {
+export class RutaPage implements OnInit, OnDestroy {
   mymap2: any;
   clientelayer: any;
   motorizadolayer: any;
@@ -87,6 +87,8 @@ export class RutaPage implements OnInit {
     { name: 'aceptado', audio: new Audio('assets/audio/ruta/aceptado.mp3') },
     { name: 'comprando', audio: new Audio('assets/audio/ruta/comprando.mp3') },
   ];
+  updateOrderInterval: any;
+  currentStatus: any;
 
   constructor(
     private modalController: ModalController,
@@ -138,9 +140,9 @@ export class RutaPage implements OnInit {
           });
         */
         },
-        error:(err: any)=>{
+        error: (err: any) => {
           console.log(err);
-        }
+        },
       });
 
     this.escucharMotorizadoSubscription = this.accionesService
@@ -447,8 +449,6 @@ export class RutaPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    //metalcore_inside@hotmail.com
-    //-9.9396478,-76.2585856
     setTimeout(async () => {
       this.mymap2 = new L.map('mapid', {
         scrollWheelZoom: false,
@@ -500,14 +500,6 @@ export class RutaPage implements OnInit {
         shadowSize: [41, 41],
       });
 
-      //Inicio consulta
-      /*this.loaderToShowPed = await this.loadingController.create({
-        message: "Cargando datos, espere porfavor...",
-        spinner: "dots",
-        backdropDismiss: false,
-        mode: "ios",
-      });
-      this.loaderToShowPed.present();*/
       let cliente = await this.storage.get('cliente');
       if (cliente == null) {
         this.navCtrl.navigateRoot('/login', { animationDirection: 'forward' });
@@ -518,86 +510,14 @@ export class RutaPage implements OnInit {
         let respuestaPedido = await this.dataService.getPedidoExisteDetalle(
           Number(cliente.IdCliente)
         );
-        if (respuestaPedido.data.success == true) {
-          let respuestaPedidoInfo = respuestaPedido.data.data;
-          this.motorizadoid = respuestaPedidoInfo.IdMotorizado;
-          this.idPedido = respuestaPedidoInfo.IdPedido;
-          this.idCliente = respuestaPedidoInfo.IdCliente;
-          this.nombreMotorizado =
-            respuestaPedidoInfo.Motorizado.Nombres +
-            ' ' +
-            respuestaPedidoInfo.Motorizado.Apellidos;
-          this.vehiculo = respuestaPedidoInfo.Motorizado.Vehiculo;
-          this.vehiculoColor = respuestaPedidoInfo.Motorizado.VehiculoColor;
-          this.vehiculoPlaca = respuestaPedidoInfo.Motorizado.VehiculoPlaca;
-          this.telefonoMotorizado = respuestaPedidoInfo.Motorizado.Telefono;
-          this.mensajes =
-            respuestaPedidoInfo.Chat != null && respuestaPedidoInfo.Chat != ''
-              ? JSON.parse(respuestaPedidoInfo.Chat)
-              : [];
-          this.dataPedido = respuestaPedidoInfo;
-          this.herramientasService.setEstado(respuestaPedidoInfo.Estado);
-
-          this.ubi_lat_cliente = respuestaPedidoInfo.Latitud;
-          this.ubi_lon_cliente = respuestaPedidoInfo.Longitud;
-          this.idpedido = respuestaPedidoInfo.IdPedido;
-          this.precio_delivery = respuestaPedidoInfo.PrecioDelivery;
-          this.precio_productos = respuestaPedidoInfo.PrecioProductos;
-          this.ubi_referencia = respuestaPedidoInfo.Referencia;
-          this.cargarMapaEmpresa(respuestaPedidoInfo.Empresa);
-          this.cargarUbicacionCliente(
-            this.ubi_lat_cliente,
-            this.ubi_lon_cliente
+        this.updateStateOrder(respuestaPedido);
+        this.updateOrderInterval = setInterval(async () => {
+          let respuestaPedido = await this.dataService.getPedidoExisteDetalle(
+            Number(cliente.IdCliente)
           );
-
-          this.empresasCoord = respuestaPedidoInfo.Empresa;
-          this.tieneSistema = respuestaPedidoInfo.Empresa.TieneSistema;
-          this.cargarEmpresasMapa();
-          switch (respuestaPedidoInfo.Estado) {
-            case 'PE': {
-              try {
-                if (this.tieneSistema == 1) {
-                  this.playAudio('preparado');
-                } else {
-                  this.playAudio('aceptado');
-                }
-              } catch (error) {
-                console.log('error');
-              }
-              break;
-            }
-            case 'PU': {
-              try {
-                if (this.tieneSistema == 1) {
-                  this.playAudio('camino');
-                } else {
-                  this.playAudio('comprando');
-                }
-              } catch (error) {
-                console.log('error');
-              }
-              break;
-            }
-            case 'UC': {
-              try {
-                this.playAudio('llegado');
-              } catch (error) {
-                console.log('error');
-              }
-              break;
-            }
-            default:
-              break;
-          }
-        } else if (respuestaPedido.data.success == false) {
-          this.navCtrl.navigateRoot('/principal', {
-            animationDirection: 'forward',
-          });
-        }
-
-        //this.loaderToShowPed.dismiss();
+          this.updateStateOrder(respuestaPedido, true);
+        }, 30000);
       } catch (error) {
-        //this.loaderToShowPed.dismiss();
         const alert = await this.alertController.create({
           header: '¡Sin conexión!',
           backdropDismiss: false,
@@ -617,6 +537,91 @@ export class RutaPage implements OnInit {
         await alert.present();
       }
     }, 500);
+  }
+
+  updateStateOrder(respuestaPedido: any, newCurrentStatus = false) {
+    if (respuestaPedido.data.success == true) {
+      let respuestaPedidoInfo = respuestaPedido.data.data;
+      this.motorizadoid = respuestaPedidoInfo.IdMotorizado;
+      this.idPedido = respuestaPedidoInfo.IdPedido;
+      this.idCliente = respuestaPedidoInfo.IdCliente;
+      this.nombreMotorizado =
+        respuestaPedidoInfo.Motorizado.Nombres +
+        ' ' +
+        respuestaPedidoInfo.Motorizado.Apellidos;
+      this.vehiculo = respuestaPedidoInfo.Motorizado.Vehiculo;
+      this.vehiculoColor = respuestaPedidoInfo.Motorizado.VehiculoColor;
+      this.vehiculoPlaca = respuestaPedidoInfo.Motorizado.VehiculoPlaca;
+      this.telefonoMotorizado = respuestaPedidoInfo.Motorizado.Telefono;
+      this.mensajes =
+        respuestaPedidoInfo.Chat != null && respuestaPedidoInfo.Chat != ''
+          ? JSON.parse(respuestaPedidoInfo.Chat)
+          : [];
+      this.dataPedido = respuestaPedidoInfo;
+      this.herramientasService.setEstado(respuestaPedidoInfo.Estado);
+
+      this.ubi_lat_cliente = respuestaPedidoInfo.Latitud;
+      this.ubi_lon_cliente = respuestaPedidoInfo.Longitud;
+      this.idpedido = respuestaPedidoInfo.IdPedido;
+      this.precio_delivery = respuestaPedidoInfo.PrecioDelivery;
+      this.precio_productos = respuestaPedidoInfo.PrecioProductos;
+      this.ubi_referencia = respuestaPedidoInfo.Referencia;
+      this.cargarMapaEmpresa(respuestaPedidoInfo.Empresa);
+      this.cargarUbicacionCliente(this.ubi_lat_cliente, this.ubi_lon_cliente);
+
+      this.empresasCoord = respuestaPedidoInfo.Empresa;
+      this.tieneSistema = respuestaPedidoInfo.Empresa.TieneSistema;
+      this.cargarEmpresasMapa();
+
+      if (newCurrentStatus) {
+        if (this.currentStatus !== respuestaPedidoInfo.Estado) {
+          this.currentStatus = respuestaPedidoInfo.Estado
+        } else {
+          return
+        }
+      }
+
+      switch (respuestaPedidoInfo.Estado) {
+        case 'PE': {
+          try {
+            if (this.tieneSistema == 1) {
+              this.playAudio('preparado');
+            } else {
+              this.playAudio('aceptado');
+            }
+          } catch (error) {
+            console.log('error');
+          }
+          break;
+        }
+        case 'PU': {
+          try {
+            if (this.tieneSistema == 1) {
+              this.playAudio('camino');
+            } else {
+              this.playAudio('comprando');
+            }
+          } catch (error) {
+            console.log('error');
+          }
+          break;
+        }
+        case 'UC': {
+          try {
+            this.playAudio('llegado');
+          } catch (error) {
+            console.log('error');
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    } else if (respuestaPedido.data.success == false) {
+      this.navCtrl.navigateRoot('/principal', {
+        animationDirection: 'forward',
+      });
+    }
   }
 
   cargarMapaEmpresa(empresa: any) {
@@ -793,5 +798,9 @@ export class RutaPage implements OnInit {
     if (track) {
       track.audio.play();
     }
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.updateOrderInterval);
   }
 }
